@@ -26,6 +26,8 @@ COPY ./config.xml /etc/syncthing/main
 
 RUN chown -R syncthing:syncthing /etc/syncthing
 
+VOLUME ["/home/syncthing/.config/syncthing"]
+
 EXPOSE 8384 22000 21027/udp
 
 USER syncthing
