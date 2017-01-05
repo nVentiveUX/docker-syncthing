@@ -21,7 +21,7 @@ RUN set -x && \
   rm "$tarball" && \
   apk del curl tar gzip gnupg;
 
-RUN useradd --uid 500 --create-home syncthing
+RUN adduser -S -u 500 syncthing
 
 RUN mkdir -p /etc/syncthing/main /syncedfolders
 
