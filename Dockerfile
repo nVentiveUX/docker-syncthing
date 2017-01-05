@@ -3,6 +3,9 @@ FROM nventiveux/docker-alpine-rpi:3.5
 MAINTAINER nVentiveUX
 
 LABEL authors="Yves ANDOLFATTO, Vincent BESANCON"
+LABEL license="MIT"
+LABEL description="Docker image for syncthing installation. \
+Think for RaspberryPi."
 
 ENV SYNCTHING_VERSION 0.14.18
 
