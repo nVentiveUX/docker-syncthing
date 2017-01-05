@@ -20,7 +20,7 @@ $ docker run -d \
   --restart always \
   -p 8384:8384 \
   -p 22000:22000 \
-  -v "$HOME/.config/syncthing:/home/user/.config/syncthing" \
+  -v "$HOME/.config/syncthing:/home/syncthing/.config/syncthing" \
   nventiveux/docker-syncthing:0.14.18
 ```
 
