@@ -7,19 +7,29 @@ LABEL license="MIT"
 LABEL description="Docker image for syncthing installation. \
 Think for RaspberryPi."
 
+# gpg: key 00654A3E: public key "Syncthing Release Management <release@syncthing.net>" imported
+ENV SYNCTHING_GPG_KEY 37C84554E7E0A261E4F76E1ED26E6ED000654A3E
+
 ENV SYNCTHING_VERSION 0.14.18
 
-RUN set -x && \
-  apk update && \
-  apk add --no-cache curl tar gzip gnupg && \
-  tarball="syncthing-linux-arm-v${SYNCTHING_VERSION}.tar.gz" && \
-  curl -fSL "https://github.com/syncthing/syncthing/releases/download/v${SYNCTHING_VERSION}/"{"$tarball",sha1sum.txt.asc} -O && \
-  grep -E " ${tarball}\$" sha1sum.txt.asc | sha1sum -c - && \
-  rm sha1sum.txt.asc && \
-  tar -xvf "$tarball" --strip-components=1 "$(basename "$tarball" .tar.gz)"/syncthing && \
-  mv syncthing /usr/local/bin/syncthing && \
-  rm "$tarball" && \
-  apk del curl tar gzip gnupg;
+RUN set -x \
+  && apk add --no-cache --virtual .temp-deps gnupg openssl \
+  && tarball="syncthing-linux-arm-v${SYNCTHING_VERSION}.tar.gz" \
+  && wget \
+    "https://github.com/syncthing/syncthing/releases/download/v${SYNCTHING_VERSION}/$tarball" \
+    "https://github.com/syncthing/syncthing/releases/download/v${SYNCTHING_VERSION}/sha1sum.txt.asc" \
+  && export GNUPGHOME="$(mktemp -d)" \
+  && gpg --keyserver ha.pool.sks-keyservers.net --recv-keys "${SYNCTHING_GPG_KEY}" \
+  && gpg --batch --decrypt --output sha1sum.txt sha1sum.txt.asc \
+  && grep -E " ${tarball}\$" sha1sum.txt | sha1sum -c - \
+  && rm -r "$GNUPGHOME" sha1sum.txt sha1sum.txt.asc \
+  && dir="$(basename "$tarball" .tar.gz)" \
+  && bin="$dir/syncthing" \
+  && tar -xvzf "$tarball" "$bin" \
+  && rm "$tarball" \
+  && mv "$bin" /usr/local/bin/syncthing \
+  && rmdir "$dir" \
+  && apk del .temp-deps;
 
 RUN addgroup -S -g 500 syncthing && \
   adduser -S -u 500 syncthing syncthing;
