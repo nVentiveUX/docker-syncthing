@@ -15,13 +15,13 @@ $ docker build --rm -t nventiveux/docker-syncthing:0.14.18 .
 Run the container
 
 ```shell
-$ docker run -d \
-  --name syncthing \
-  --restart always \
-  -p 8384:8384 \
-  -p 22000:22000 \
-  -v "$HOME/.config/syncthing:/home/syncthing/.config/syncthing" \
-  nventiveux/docker-syncthing:0.14.18
+$ {
+sudo cp docker-syncthing@.service /etc/systemd/system/ &&
+sudo systemctl daemon-reload &&
+sudo systemctl enable docker-syncthing@$USER.service &&
+sudo systemctl start docker-syncthing@$USER.service &&
+sudo systemctl status -l docker-syncthing@$USER.service;
+}
 ```
 
 ## References
