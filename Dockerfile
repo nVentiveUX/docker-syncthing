@@ -8,7 +8,7 @@ ENV SYNCTHING_VERSION 0.14.18
 
 RUN set -x && \
   apk update && \
-  apk add curl tar gzip gnupg && \
+  apk add --no-cache curl tar gzip gnupg && \
   tarball="syncthing-linux-arm-v${SYNCTHING_VERSION}.tar.gz" && \
   curl -fSL "https://github.com/syncthing/syncthing/releases/download/v${SYNCTHING_VERSION}/"{"$tarball",sha1sum.txt.asc} -O && \
   grep -E " ${tarball}\$" sha1sum.txt.asc | sha1sum -c - && \
