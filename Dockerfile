@@ -21,7 +21,8 @@ RUN set -x && \
   rm "$tarball" && \
   apk del curl tar gzip gnupg;
 
-RUN adduser -S -u 500 syncthing
+RUN addgroup -S -g 500 syncthing && \
+  adduser -S -u 500 syncthing syncthing;
 
 RUN mkdir -p /etc/syncthing/main /syncedfolders
 
