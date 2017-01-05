@@ -32,7 +32,7 @@ RUN set -x \
   && apk del .temp-deps;
 
 RUN addgroup -S -g 500 syncthing && \
-  adduser -S -u 500 syncthing syncthing;
+  adduser -S -u 500 -D -G syncthing syncthing;
 
 RUN mkdir -p /etc/syncthing/main /syncedfolders
 
