@@ -1,4 +1,4 @@
-FROM alpine:3.5
+FROM nventiveux/docker-alpine-rpi:3.5
 
 MAINTAINER nVentiveUX
 
