@@ -34,13 +34,13 @@ RUN set -x \
 RUN addgroup -S -g 500 syncthing && \
   adduser -S -u 500 -D -G syncthing syncthing;
 
-RUN mkdir -p /etc/syncthing/main /syncedfolders
+RUN mkdir -p /etc/syncthing /syncedfolders
 
-COPY ./config.xml /etc/syncthing/main
+COPY ./config.xml /etc/syncthing
 
 RUN chown -R syncthing:syncthing /etc/syncthing
 
-VOLUME ["/home/syncthing/.config/syncthing"]
+VOLUME ["/etc/syncthing"]
 
 EXPOSE 8384 22000 21027/udp
 
@@ -48,4 +48,4 @@ USER syncthing
 
 ENTRYPOINT ["/usr/local/bin/syncthing"]
 
-CMD ["-home=/etc/syncthing/main", "-logflags=0"]
+CMD ["-home=/etc/syncthing", "-logflags=0"]
