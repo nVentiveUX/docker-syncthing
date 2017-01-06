@@ -37,20 +37,20 @@ RUN set -x \
   && rmdir "$dir" \
   && apk del .temp-deps;
 
-RUN addgroup -S -g ${SYNCTHING_GROUP_UID} ${SYNCTHING_GROUP} && \
-  adduser -S -u ${SYNCTHING_USER_UID} -D -G ${SYNCTHING_GROUP} ${SYNCTHING_USER};
+RUN addgroup -S -g $SYNCTHING_GROUP_UID $SYNCTHING_GROUP && \
+  adduser -S -u $SYNCTHING_USER_UID -D -G $SYNCTHING_GROUP $SYNCTHING_USER;
 
 RUN mkdir -p /etc/syncthing /syncedfolders
 
 COPY ./config.xml /etc/syncthing
 
-RUN chown -R ${SYNCTHING_USER}:${SYNCTHING_GROUP} /etc/syncthing
+RUN chown -R $SYNCTHING_USER:$SYNCTHING_GROUP /etc/syncthing
 
 VOLUME ["/etc/syncthing"]
 
 EXPOSE 8384 22000 21027/udp
 
-USER ${SYNCTHING_USER}
+USER $SYNCTHING_USER
 
 ENTRYPOINT ["/usr/local/bin/syncthing"]
 
