@@ -16,9 +16,23 @@ Run the container
 
 ```shell
 $ {
-sudo cp docker-syncthing@.service /etc/systemd/system/ &&
+sudo cp systemd/docker-syncthing@.service /etc/systemd/system/ &&
+sudo cp systemd/docker-syncthing@.default /etc/default/docker-syncthing@$USER &&
 sudo systemctl daemon-reload &&
-sudo systemctl enable docker-syncthing@$USER.service &&
+sudo systemctl enable docker-syncthing@$USER.service;
+}
+```
+
+Provide some folder to sync
+
+```shell
+$ sudo vi /etc/default/docker-syncthing@$USER
+```
+
+Start Syncthing
+
+```shell
+$ {
 sudo systemctl start docker-syncthing@$USER.service &&
 sudo systemctl status -l docker-syncthing@$USER.service;
 }
