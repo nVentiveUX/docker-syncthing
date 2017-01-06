@@ -37,7 +37,7 @@ RUN set -x \
   && rmdir "$dir" \
   && apk del .temp-deps;
 
-RUN addgroup -S -g $SYNCTHING_GROUP_UID $SYNCTHING_GROUP && \
+RUN addgroup -S -g $SYNCTHING_GROUP_GID $SYNCTHING_GROUP && \
   adduser -S -u $SYNCTHING_USER_UID -D -G $SYNCTHING_GROUP $SYNCTHING_USER;
 
 RUN mkdir -p /etc/syncthing /syncedfolders
