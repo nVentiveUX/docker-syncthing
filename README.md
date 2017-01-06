@@ -38,6 +38,8 @@ sudo systemctl status -l docker-syncthing@$USER.service;
 }
 ```
 
+Open web browser to https://localhost:8384/ (replace `localhost` by your RPi address).
+
 ## References
 
 Based on [tianon/dockerfiles](https://github.com/tianon/dockerfiles).
