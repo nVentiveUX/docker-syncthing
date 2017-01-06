@@ -1,0 +1,5 @@
+# Container options for docker-syncthing.
+#
+# List directories to mount in /syncedfolders from host.
+# Refer to '-v' option of 'docker run' to know the syntax.
+#VOLUMES="-v /media/livestorage/videos/Movies/VF-VOSTFR:/syncedfolders/Movies/VF-VOSTFR"
