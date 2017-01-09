@@ -6,7 +6,7 @@ After=docker.service
 [Service]
 Restart=always
 EnvironmentFile=-/etc/default/docker-syncthing@%i
-ExecStart=/usr/bin/docker run --rm --name syncthing_%i -h %H_syncthing_%i -p 8384:8384 -p 22000:22000 -v syncthing_data:/etc/syncthing $VOLUMES nventiveux/docker-syncthing:0.14.18
+ExecStart=/usr/bin/docker run --rm --name syncthing_%i -h %H_syncthing_%i -p 8384:8384 -p 22000:22000 -v syncthing_%i_data:/etc/syncthing $VOLUMES nventiveux/docker-syncthing:0.14.18
 
 [Install]
 WantedBy=multi-user.target
