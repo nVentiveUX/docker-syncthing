@@ -19,10 +19,38 @@ Tested on:
 $ curl -sSL https://raw.githubusercontent.com/nVentiveUX/docker-syncthing/master/installer.sh | sudo bash
 ```
 
+The installer will:
+
 * Ensure [Docker Engine](https://www.docker.com/products/overview) is installed.
-* Install as a **systemd service** container stop / start.
-* Install service options in `/etc/default`.
-* Set service start at boot.
+* Install **docker-syncthing** systemd service for container stop / start.
+* Install service options in `/etc/default/docker-syncthing`.
+
+### Provide content to sync
+
+Path `/syncedfolders` within container holds synced content.
+
+Edit service configuration `/etc/default/docker-syncthing` to specify folder to sync.
+
+Available options:
+
+* `VOLUMES`
+    * Specify your folder(s) to sync here (you can specify more by appending `-v`):
+
+    ```
+    VOLUMES="-v /path/to/your/content:/syncedfolders/content"
+    ```
+
+* `PORTS`
+    * Specify port binding used by Syncthing:
+
+    ```
+    PORTS="-p 8384:8384 -p 22000:22000"
+    ```
+
+    * Default ports:
+        * `21027/udp` --> Local discovery
+        * `22000/tcp` --> Sync protocol
+        * `8384/tcp` --> Admin interface
 
 ## Run multiple instances
 
