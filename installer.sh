@@ -55,14 +55,16 @@ function install_systemd_service() {
     fi
 
     systemctl daemon-reload
-
-    echo "### Enabling docker-syncthing at system boot..."
-    systemctl enable docker-syncthing.service
 }
 
 function start_syncthing_service() {
-    echo "## Starting docker-syncthing service..."
-    systemctl start docker-syncthing.service
+    echo
+    echo "Manually start the service with:"
+    echo "  systemctl start docker-syncthing.service"
+    echo
+    echo "Enable service start at boot time with:"
+    echo "  systemctl enable docker-syncthing.service"
+    echo
 }
 
 function configure() {
