@@ -85,7 +85,7 @@ $ sudo systemctl start docker-syncthing@${INSTANCE_NAME}
 
 Repeat these steps to setup others instances.
 
-## Build image and test
+## Build image
 
 Clone this repository and build the Docker image:
 
@@ -95,7 +95,9 @@ $ cd docker-syncthing
 $ docker build --rm -t nventiveux/docker-syncthing:latest .
 ```
 
-Run it !
+## Manual usage
+
+Run the container manually:
 
 ```shell
 $ docker run \
