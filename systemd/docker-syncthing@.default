@@ -3,3 +3,6 @@
 # List directories to mount in /syncedfolders from host.
 # Refer to '-v' option of 'docker run' to know the syntax.
 #VOLUMES="-v /media/livestorage/videos/Movies/VF-VOSTFR:/syncedfolders/Movies/VF-VOSTFR"
+
+# Configure ports mapping between host and container
+#PORTS="-p 8384:8384 -p 22000:22000"

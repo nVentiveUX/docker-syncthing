@@ -1,0 +1,13 @@
+[Unit]
+Description=Syncthing - Open Source Continuous File Synchronization
+Documentation=http://docs.syncthing.net/
+After=docker.service
+
+[Service]
+Restart=always
+Environment='PORTS=-p 8384:8384 -p 22000:22000'
+EnvironmentFile=-/etc/default/docker-syncthing
+ExecStart=/usr/bin/docker run --rm --name syncthing -h %H_syncthing $PORTS -v syncthing_data:/etc/syncthing $VOLUMES nventiveux/docker-syncthing:latest
+
+[Install]
+WantedBy=multi-user.target
