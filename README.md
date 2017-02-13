@@ -92,8 +92,10 @@ Clone this repository and build the Docker image:
 ```shell
 $ git clone https://github.com/nVentiveUX/docker-syncthing.git
 $ cd docker-syncthing
-$ docker build --rm -t nventiveux/docker-syncthing:latest .
+$ make build
 ```
+
+Look at `build/` directory for image builds.
 
 ## Manual usage
 
