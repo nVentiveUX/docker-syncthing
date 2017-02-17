@@ -13,7 +13,7 @@ default:
 
 .PHONY: build
 build: clean-build build-dir
-	docker build --rm -t nventiveux/docker-syncthing:latest .
+	docker build --rm -t nventiveux/docker-syncthing:latest -t nventiveux/docker-syncthing:0.14.23 .
 	docker save -o build/docker-syncthing_latest.tar nventiveux/docker-syncthing:latest
 	gzip -9 build/docker-syncthing_latest.tar
 
