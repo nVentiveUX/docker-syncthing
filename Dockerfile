@@ -1,26 +1,28 @@
-FROM nventiveux/docker-alpine-rpi:3.5
+FROM alpine:3.10
 
-MAINTAINER nVentiveUX
-
-LABEL authors="Yves ANDOLFATTO, Vincent BESANCON"
+LABEL authors="nVentiveUX <https://github.com/nVentiveUX>"
 LABEL license="MIT"
 LABEL description="Docker image for syncthing installation. \
-Think for RaspberryPi."
+Think for ARM / x64 devices."
 
 # User definition environment variables
-ENV SYNCTHING_USER syncthing
-ENV SYNCTHING_USER_UID 500
-ENV SYNCTHING_GROUP syncthing
-ENV SYNCTHING_GROUP_GID 500
+ENV SYNCTHING_USER="syncthing" \
+    SYNCTHING_USER_UID=1000 \
+    SYNCTHING_GROUP="syncthing" \
+    SYNCTHING_GROUP_GID=1000 \
+    SYNCTHING_ADMIN_USER="admin" \
+    SYNCTHING_ADMIN_PASSWORD="admin"
 
 # gpg: key 00654A3E: public key "Syncthing Release Management <release@syncthing.net>" imported
 ENV SYNCTHING_GPG_KEY 37C84554E7E0A261E4F76E1ED26E6ED000654A3E
+ENV SYNCTHING_VERSION 1.1.4
 
-ENV SYNCTHING_VERSION 0.14.23
+RUN set -ex \
+  && apk add --no-cache bash shadow su-exec py3-bcrypt py3-cryptography
 
-RUN set -x \
+RUN set -ex \
   && apk add --no-cache --virtual .temp-deps gnupg openssl \
-  && tarball="syncthing-linux-arm-v${SYNCTHING_VERSION}.tar.gz" \
+  && tarball="syncthing-linux-amd64-v${SYNCTHING_VERSION}.tar.gz" \
   && wget \
     "https://github.com/syncthing/syncthing/releases/download/v${SYNCTHING_VERSION}/$tarball" \
     "https://github.com/syncthing/syncthing/releases/download/v${SYNCTHING_VERSION}/sha1sum.txt.asc" \
@@ -28,7 +30,7 @@ RUN set -x \
   && gpg --keyserver ha.pool.sks-keyservers.net --recv-keys "${SYNCTHING_GPG_KEY}" \
   && gpg --batch --decrypt --output sha1sum.txt sha1sum.txt.asc \
   && grep -E " ${tarball}\$" sha1sum.txt | sha1sum -c - \
-  && rm -r "$GNUPGHOME" sha1sum.txt sha1sum.txt.asc \
+  && rm -rf "$GNUPGHOME" sha1sum.txt sha1sum.txt.asc \
   && dir="$(basename "$tarball" .tar.gz)" \
   && bin="$dir/syncthing" \
   && tar -xvzf "$tarball" "$bin" \
@@ -37,21 +39,16 @@ RUN set -x \
   && rmdir "$dir" \
   && apk del .temp-deps;
 
-RUN addgroup -S -g $SYNCTHING_GROUP_GID $SYNCTHING_GROUP && \
-  adduser -S -u $SYNCTHING_USER_UID -D -G $SYNCTHING_GROUP $SYNCTHING_USER;
-
-RUN mkdir -p /etc/syncthing /syncedfolders
+RUN set -ex \
+  && mkdir -p /etc/syncthing /var/lib/syncthing
 
 COPY ./config.xml /etc/syncthing
+COPY ./docker-entrypoint.sh /docker-entrypoint.sh
 
-RUN chown -R $SYNCTHING_USER:$SYNCTHING_GROUP /etc/syncthing
-
-VOLUME ["/etc/syncthing"]
+VOLUME ["/etc/syncthing", "/var/lib/synchting"]
 
 EXPOSE 8384 22000 21027/udp
 
-USER $SYNCTHING_USER
+ENTRYPOINT ["/docker-entrypoint.sh"]
 
-ENTRYPOINT ["/usr/local/bin/syncthing"]
-
-CMD ["-home=/etc/syncthing", "-logflags=0"]
+CMD ["syncthing", "-home=/etc/syncthing", "-logflags=0"]
