@@ -1,5 +1,7 @@
 # Syncthing Docker image
 
+[![Build Status](https://travis-ci.org/nVentiveUX/docker-syncthing.svg?branch=master)](https://travis-ci.org/nVentiveUX/docker-syncthing)
+
 Syncthing Docker image for RaspberryPi / amd64 systems.
 
 > Syncthing replaces proprietary sync and cloud services with something open, trustworthy and decentralized.
