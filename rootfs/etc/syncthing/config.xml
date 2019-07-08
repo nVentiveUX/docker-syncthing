@@ -13,8 +13,7 @@
         <localAnnounceEnabled>true</localAnnounceEnabled>
         <localAnnouncePort>21027</localAnnouncePort>
         <localAnnounceMCAddr>[ff12::8384]:21027</localAnnounceMCAddr>
-        <relaysEnabled>true</relaysEnabled>
-        <relayReconnectIntervalM>10</relayReconnectIntervalM>
+        <relaysEnabled>false</relaysEnabled>
         <startBrowser>false</startBrowser>
         <natEnabled>false</natEnabled>
         <urAccepted>-1</urAccepted>
