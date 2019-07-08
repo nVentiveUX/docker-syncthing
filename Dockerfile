@@ -42,12 +42,11 @@ RUN set -ex \
 RUN set -ex \
   && mkdir -p /etc/syncthing /var/lib/syncthing
 
-COPY ./config.xml /etc/syncthing
-COPY ./docker-entrypoint.sh /docker-entrypoint.sh
+COPY rootfs/ /
 
-VOLUME ["/etc/syncthing", "/var/lib/synchting"]
+VOLUME ["/etc/syncthing", "/var/lib/syncthing"]
 
-EXPOSE 8384 22000 21027/udp
+EXPOSE 8384/tcp 22000/tcp 21027/udp
 
 ENTRYPOINT ["/docker-entrypoint.sh"]
 
