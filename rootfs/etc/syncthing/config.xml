@@ -10,7 +10,7 @@
         <listenAddress>tcp://0.0.0.0:22000</listenAddress>
         <globalAnnounceServer>default</globalAnnounceServer>
         <globalAnnounceEnabled>false</globalAnnounceEnabled>
-        <localAnnounceEnabled>true</localAnnounceEnabled>
+        <localAnnounceEnabled>false</localAnnounceEnabled>
         <localAnnouncePort>21027</localAnnouncePort>
         <localAnnounceMCAddr>[ff12::8384]:21027</localAnnounceMCAddr>
         <relaysEnabled>false</relaysEnabled>
