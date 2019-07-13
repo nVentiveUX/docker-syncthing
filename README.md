@@ -17,28 +17,35 @@ Tested on:
 ## Available image tags
 
 * `nventiveux/syncthing`
-  * `latest`, `v1.1.4-0` ([Dockerfile.amd64](Dockerfile.amd64))
-  * `latest-arm32v6`, `v1.1.4-0-arm32v6` ([Dockerfile.arm32v6](Dockerfile.arm32v6))
+  * `latest`, `v1.2`, `v1.2.0`, `v1.2.0-0` ([Dockerfile.amd64](Dockerfile.amd64))
+  * `latest-arm32v6`, `v1.2-arm32v6`, `v1.2.0-arm32v6`, `v1.2.0-0-arm32v6` ([Dockerfile.arm32v6](Dockerfile.arm32v6))
 
 ## Usage
 
-Run the container manually:
+Run the container manually (select tag according to the target architecture):
 
 ```shell
-$ docker run \
-    -d \
-    --name syncthing \
-    -p 8384:8384/tcp \
-    -p 22000:22000/tcp \
-    -p 21027:21027/udp \
-    -v syncthing_config:/etc/syncthing \
-    -v syncthing_data:/var/lib/syncthing \
-    nventiveux/syncthing:latest
+{
+mkdir -p "${HOME}/Sync";
+docker run \
+  -d \
+  --name syncthing \
+  -p 8384:8384/tcp \
+  -p 22000:22000/tcp \
+  -p 21027:21027/udp \
+  -v syncthing_config:/etc/syncthing \
+  -v "${HOME}/Sync":/var/lib/syncthing \
+  nventiveux/syncthing:latest;
+}
 ```
+
+Open the administration website with [https://localhost:8384/](https://localhost:8384/) and connect using `admin / admin`.
+
+This will make available for syncing all folders within `~/Sync`. You may be interested to adapt environment variables `SYNCTHING_USER_UID` and `SYNCTHING_GROUP_GID` to match your user UID / GID at the host (verify with `id`).
 
 ## Persisting data
 
-Following paths should be persisted:
+Following paths within the container should be persisted:
 
 * `/var/lib/syncthing` holds synced content.
 * `/etc/syncthing` holds the syncthing configuration.
@@ -46,9 +53,59 @@ Following paths should be persisted:
 ## Network ports
 
 * Default ports:
-  * `21027/udp` --> Local discovery
+  * `21027/udp` --> Local discovery (see **Known issues**)
   * `22000/tcp` --> Sync protocol
   * `8384/tcp` --> Admin interface
+
+## Environment variables
+
+You can configure Syncthing injecting following environment variables:
+
+| Variable                 | Description                                  | Default     |
+|--------------------------|----------------------------------------------|-------------|
+| SYNCTHING_USER           | Name of container user                       | `syncthing` |
+| SYNCTHING_USER_UID       | Map container user to this UID               | `1000`      |
+| SYNCTHING_GROUP          | Name of container user primary group         | `syncthing` |
+| SYNCTHING_GROUP_GID      | Map container user primary group to this GID | `1000`      |
+| SYNCTHING_ADMIN_USER     | Admin username                               | `admin`     |
+| SYNCTHING_ADMIN_PASSWORD | Admin password                               | `admin`     |
+
+Example to set another password for the admin user:
+
+```shell
+docker run \
+  ...
+  -e SYNCTHING_ADMIN_PASSWORD="anotherpassword" \
+  ...
+```
+
+## Known issues
+
+* Local discovery does not work without `--network=host`. Need more testing if this can be avoided.
+
+## Contribute
+
+Pre-requisites:
+
+* Python >=3.7
+* [Pipenv](https://github.com/pypa/pipenv)
+* make
+* Bash >=4
+* Git >=2.18
+
+Prepare your environment:
+
+```shell
+make install
+```
+
+Tweak `Dockerfile.j2` to your convenience (we are using [Jinja2](http://jinja.pocoo.org/)) and update templates with:
+
+```shell
+make dockerfiles
+```
+
+Commit changes and submit a **Pull Request**.
 
 ## References
 
