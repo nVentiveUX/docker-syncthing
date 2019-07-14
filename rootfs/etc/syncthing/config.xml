@@ -22,7 +22,7 @@
         <keepTemporariesH>24</keepTemporariesH>
         <cacheIgnoredFiles>false</cacheIgnoredFiles>
         <symlinksEnabled>true</symlinksEnabled>
-        <releasesURL></releasesURL>
+        <releasesURL>https://upgrades.syncthing.net/meta.json</releasesURL>
         <defaultFolderPath>/var/lib/syncthing</defaultFolderPath>
     </options>
 </configuration>
