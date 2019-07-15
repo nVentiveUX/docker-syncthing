@@ -1,0 +1,49 @@
+dist: xenial
+
+sudo: required
+
+services:
+  - docker
+
+language: bash
+
+env:
+  global:
+    - DOCKER_IMAGE="nventiveux/syncthing"
+
+    - secure: "oee7IfKzj0B2H+E0keOnnD0iaoC1tbRPhNuVQNhNCJ4iT5v/0Hgx6Mc5n+kTRZWWAF0CkGtI1cgJjIMHPO8gnkb+4Lz0tEdHoVyQoavvqihQGpHtYML9oLb7iKb+SkFVBeZVDDGar43Tzr3Y/eunf2EGlnzemVymkB8eCLaeckgY1rDp68Xs58dFR5JBHn/d0JlY4/1N7FZ/eqh1RJIGpLjpgPFxMt9r8Bz/d0+kEjtVZS24lnF8+tuQ2jNSVTxN9RfpTyqtRy17CS+Q9g/01BSlLa4e2Br3wGyPP7iZjA+LRpC8iH/OctUv0wZvAr7+kY8La4RibgNkGgJOiiqn5cW70oeeZY48qe7DKjpxvvA0NIbNnfYAS0+iqJBL9X8wTkRy+b+6IT5qc+H+NS67Q4fE9LTcQzbA3x8UeYSm5ul+7riQj6l+2mFVZ78T5EStiWsTR53xUDIW5Bvo085EKAapsbrZnb1mumPH6aeL6cnK02QnnUGXl584B1K8CDOC3C1Wcls9dyEZCGZ/fDPEM6kODf8gpDGHVc6WTd2RxTQNs9xAjY3bl9JzFT960ybM7ceciqGO4wf9oStEbzJ7IO7aW8PtAr0TzMyPawyjkwfxu+gzLq9pf0p6NlG8s1j4oetmvWdBuiGfddxxW7h8Gqq5z9p56sdA85DPrjm0IXM="
+
+    - secure: "apwbhiHo29G//55bBizh7ShBewvU1Mh9WlSlilZPTAF5pcPl0kIr+gMiTcRwpGN/TcqrmcYg5DElQhWnIR00ghv0QDCFp2R5hTwjagxukNSFry1ZaGA3wDc+VHyA2X/7uJUxJrvS9y4MTt36Leb71474QYOD70JoMx/FDEWvMfi1MC0b03vBo3eVLrTWv7IvCR8dQkdRgQ9NLpo/eeBYTAS2mx4sMARBld66qQ0UI4T+X76fY6ntXzJpWWyy09osFDJqETbBg2O9SWhRs1wZjRTPiyUySiFmGHL/Gx7lwby8HNRQ7B8h/DFQFWg9x2v7cSQnMq0K8Nxabgf6FHB+yqjVlMxyD39O6hlEvHbFwzd15obuxjd91pkSaLQ5qlybOkToQDjaVjknI8sGzXmA4t1NMnhl90QSMCWL9XmwTUW4n/c0S3d80aJsk+cENp54JIFvYCdzZxDryrLLVkMl6zxA3B0QivEJMa8vZGdVTdkrWVZ3XJJxrKHQpUOm0s/yodADIchnf/0WAdU68NiU0IvdP9e6CxGONYiUDBbqZ0Levot+lKfXZ62hJ0bLFQg/Oqi4+UbN5R/bbn/cQxrfveA49XGu/ypESF0iKWVsQiGYd6eZ9RZyk5d60mHgjhtrK8hdzyzvzZVdBkSsBfXiuf7iYl3RmGXq6jd88Xjvat8="
+  matrix:
+    - ARCH="amd64"
+    - ARCH="arm32v6"
+
+script:
+  - docker run --rm --privileged multiarch/qemu-user-static:register --reset
+  - curl -SLO https://github.com/multiarch/qemu-user-static/releases/download/v2.9.1-1/qemu-arm-static.tar.gz
+  - tar zxvf qemu-arm-static.tar.gz
+  - dockerfile="Dockerfile.${ARCH}"
+  - if [ "${TRAVIS_BRANCH}" == "master" ]; then
+      if [[ "${ARCH}" == "amd64" ]]; then
+          arch_tag="";
+      else
+          arch_tag="-${ARCH}";
+      fi
+
+      git_tag=$(git describe --abbrev=0);
+      latest_tag="latest${arch_tag}";
+
+      docker build \
+        -t "${DOCKER_IMAGE}:${latest_tag}" \
+        -f "${dockerfile}" .;
+      
+      ./scripts/image_tag "${git_tag}";
+    else
+      docker build -t "${DOCKER_IMAGE}:develop-${ARCH}" -f "${dockerfile}" .;
+    fi
+  - docker images
+
+after_script:
+  - echo "${DOCKER_PASSWORD}" | docker login -u "${DOCKER_USERNAME}" --password-stdin
+  - docker push "${DOCKER_IMAGE}"
+  - docker logout

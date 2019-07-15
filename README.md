@@ -1,6 +1,8 @@
-# docker-syncthing
+# Syncthing Docker image
 
-Syncthing Docker image for RaspberryPi.
+[![Build Status](https://travis-ci.org/nVentiveUX/docker-syncthing.svg?branch=master)](https://travis-ci.org/nVentiveUX/docker-syncthing)
+
+Syncthing Docker image for RaspberryPi / amd64 systems.
 
 > Syncthing replaces proprietary sync and cloud services with something open, trustworthy and decentralized.
 
@@ -8,129 +10,102 @@ See [Syncthing](https://syncthing.net/) website for more.
 
 Tested on:
 
+* Archlinux (amd64)
 * RaspberryPi 2 (Model B)
 * RaspberryPi 3 (Model B)
 
-**Note**: this is still under heavy development and testing. Feedbacks / Pull requests are welcome !
+## Available image tags
 
-## Quick install
+* `nventiveux/syncthing`
+  * `latest`, `v1.2`, `v1.2.0`, `v1.2.0-0` ([Dockerfile.amd64](Dockerfile.amd64))
+  * `latest-arm32v6`, `v1.2-arm32v6`, `v1.2.0-arm32v6`, `v1.2.0-0-arm32v6` ([Dockerfile.arm32v6](Dockerfile.arm32v6))
 
-```shell
-$ curl -sSL https://raw.githubusercontent.com/nVentiveUX/docker-syncthing/master/installer.sh | sudo bash
-```
+## Usage
 
-The installer will:
-
-* Ensure [Docker Engine](https://www.docker.com/products/overview) is installed.
-* Install **docker-syncthing** systemd service for container stop / start.
-* Install service options in `/etc/default/docker-syncthing`.
-
-### Provide content to sync
-
-Path `/syncedfolders` within container holds synced content.
-
-Edit service configuration `/etc/default/docker-syncthing` to specify folder to sync.
-
-Available options:
-
-* `VOLUMES`
-    * Specify your folder(s) to sync here (you can specify more by appending `-v`):
-
-    ```
-    VOLUMES="-v /path/to/your/content:/syncedfolders/content"
-    ```
-
-* `PORTS`
-    * Specify port binding used by Syncthing:
-
-    ```
-    PORTS="-p 8384:8384 -p 22000:22000"
-    ```
-
-    * Default ports:
-        * `21027/udp` --> Local discovery
-        * `22000/tcp` --> Sync protocol
-        * `8384/tcp` --> Admin interface
-
-## Run multiple instances
-
-Define an instance name, replace `<NAME>` by something suitable for you:
+Run the container manually (select tag according to the target architecture):
 
 ```shell
-$ INSTANCE_NAME="<NAME>"
-```
-
-Setup the new instance as a **systemd service**:
-
-```shell
-$ {
-sudo cp systemd/docker-syncthing@.service /etc/systemd/system/ &&
-sudo cp systemd/docker-syncthing@.default /etc/default/docker-syncthing@${INSTANCE_NAME} &&
-sudo systemctl daemon-reload &&
-sudo systemctl enable docker-syncthing@${INSTANCE_NAME}.service;
+{
+mkdir -p "${HOME}/Sync";
+docker run \
+  -d \
+  --name syncthing \
+  -p 8384:8384/tcp \
+  -p 22000:22000/tcp \
+  -p 21027:21027/udp \
+  -v syncthing_config:/etc/syncthing \
+  -v "${HOME}/Sync":/var/lib/syncthing \
+  nventiveux/syncthing:latest;
 }
 ```
 
-Edit instance options:
+Open the administration website with [https://localhost:8384/](https://localhost:8384/) and connect using `admin / admin`.
+
+This will make available for syncing all folders within `~/Sync`. You may be interested to adapt environment variables `SYNCTHING_USER_UID` and `SYNCTHING_GROUP_GID` to match your user UID / GID at the host (verify with `id`).
+
+## Persisting data
+
+Following paths within the container should be persisted:
+
+* `/var/lib/syncthing` holds synced content.
+* `/etc/syncthing` holds the syncthing configuration.
+
+## Network ports
+
+* Default ports:
+  * `21027/udp` --> Local discovery (see **Known issues**)
+  * `22000/tcp` --> Sync protocol
+  * `8384/tcp` --> Admin interface
+
+## Environment variables
+
+You can configure Syncthing injecting following environment variables:
+
+| Variable                 | Description                                  | Default     |
+|--------------------------|----------------------------------------------|-------------|
+| SYNCTHING_USER           | Name of container user                       | `syncthing` |
+| SYNCTHING_USER_UID       | Map container user to this UID               | `1000`      |
+| SYNCTHING_GROUP          | Name of container user primary group         | `syncthing` |
+| SYNCTHING_GROUP_GID      | Map container user primary group to this GID | `1000`      |
+| SYNCTHING_ADMIN_USER     | Admin username                               | `admin`     |
+| SYNCTHING_ADMIN_PASSWORD | Admin password                               | `admin`     |
+
+Example to set another password for the admin user:
 
 ```shell
-$ sudo vi /etc/default/docker-syncthing@${INSTANCE_NAME}
+docker run \
+  ...
+  -e SYNCTHING_ADMIN_PASSWORD="anotherpassword" \
+  ...
 ```
 
-Start new instance:
+## Known issues
+
+* Local discovery does not work without `--network=host`. Need more testing if this can be avoided.
+
+## Contribute
+
+Pre-requisites:
+
+* Python >=3.7
+* [Pipenv](https://github.com/pypa/pipenv)
+* make
+* Bash >=4
+* Git >=2.18
+
+Prepare your environment:
 
 ```shell
-$ sudo systemctl start docker-syncthing@${INSTANCE_NAME}
+make install
 ```
 
-Repeat these steps to setup others instances.
-
-## Build image
-
-Clone this repository and build the Docker image:
+Tweak `Dockerfile.j2` to your convenience (we are using [Jinja2](http://jinja.pocoo.org/)) and update templates with:
 
 ```shell
-$ git clone https://github.com/nVentiveUX/docker-syncthing.git
-$ cd docker-syncthing
-$ make build
+make dockerfiles
 ```
 
-Look at `build/` directory for image builds.
-
-## Manual usage
-
-Run the container manually:
-
-```shell
-$ docker run \
-    --rm \
-    --name syncthing \
-    -p 8384:8384 -p 22000:22000 \
-    nventiveux/docker-syncthing:latest
-```
-
-Persist syncthing database and configuration by creating a [volume or data container](https://docs.docker.com/engine/tutorials/dockervolumes/) with:
-
-```shell
-$ docker run \
-    --rm \
-    --name syncthing \
-    -p 8384:8384 -p 22000:22000 \
-    -v syncthing_data:/etc/syncthing \
-    nventiveux/docker-syncthing:latest
-```
-
-Use `/syncedfolders` to store synced content to the syncthing container:
-
-```shell
-$ docker run \
-    --rm \
-    --name syncthing \
-    -p 8384:8384 -p 22000:22000 \
-    -v syncthing_data:/etc/syncthing \
-    -v /work:/syncedfolders/work \
-    nventiveux/docker-syncthing:latest
-```
+Commit changes and submit a **Pull Request**.
 
 ## References
 

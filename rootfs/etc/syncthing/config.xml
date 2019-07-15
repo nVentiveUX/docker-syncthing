@@ -1,0 +1,28 @@
+<configuration version="29">
+    <gui enabled="true" tls="true" debugging="false">
+        <address>0.0.0.0:8384</address>
+        <authMode>static</authMode>
+        <user></user>
+        <password></password>
+        <theme>default</theme>
+    </gui>
+    <options>
+        <listenAddress>tcp://0.0.0.0:22000</listenAddress>
+        <globalAnnounceServer>default</globalAnnounceServer>
+        <globalAnnounceEnabled>false</globalAnnounceEnabled>
+        <localAnnounceEnabled>false</localAnnounceEnabled>
+        <localAnnouncePort>21027</localAnnouncePort>
+        <localAnnounceMCAddr>[ff12::8384]:21027</localAnnounceMCAddr>
+        <relaysEnabled>false</relaysEnabled>
+        <startBrowser>false</startBrowser>
+        <natEnabled>false</natEnabled>
+        <urAccepted>-1</urAccepted>
+        <restartOnWakeup>true</restartOnWakeup>
+        <autoUpgradeIntervalH>0</autoUpgradeIntervalH>
+        <keepTemporariesH>24</keepTemporariesH>
+        <cacheIgnoredFiles>false</cacheIgnoredFiles>
+        <symlinksEnabled>true</symlinksEnabled>
+        <releasesURL>https://upgrades.syncthing.net/meta.json</releasesURL>
+        <defaultFolderPath>/var/lib/syncthing</defaultFolderPath>
+    </options>
+</configuration>
