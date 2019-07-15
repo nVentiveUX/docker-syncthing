@@ -17,8 +17,8 @@ Tested on:
 ## Available image tags
 
 * `nventiveux/syncthing`
-  * `latest`, `v1.2`, `v1.2.0`, `v1.2.0-0` ([Dockerfile.amd64](Dockerfile.amd64))
-  * `latest-arm32v6`, `v1.2-arm32v6`, `v1.2.0-arm32v6`, `v1.2.0-0-arm32v6` ([Dockerfile.arm32v6](Dockerfile.arm32v6))
+  * `latest`, `v1.2`, `v1.2.0`, `v1.2.0-2` ([Dockerfile.amd64](Dockerfile.amd64))
+  * `latest-arm32v6`, `v1.2-arm32v6`, `v1.2.0-arm32v6`, `v1.2.0-2-arm32v6` ([Dockerfile.arm32v6](Dockerfile.arm32v6))
 
 ## Usage
 
