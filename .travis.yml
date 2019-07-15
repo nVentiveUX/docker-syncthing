@@ -33,10 +33,7 @@ script:
       git_tag=$(git describe --abbrev=0);
       latest_tag="latest${arch_tag}";
 
-      docker build \
-        -t "${DOCKER_IMAGE}:${latest_tag}" \
-        -f "${dockerfile}" .;
-      
+      docker build -t "${DOCKER_IMAGE}:${latest_tag}" -f "${dockerfile}" .;
       ./scripts/image_tag "${git_tag}";
     else
       docker build -t "${DOCKER_IMAGE}:develop-${ARCH}" -f "${dockerfile}" .;
