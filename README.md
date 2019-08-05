@@ -17,8 +17,8 @@ Tested on:
 ## Available image tags
 
 * `nventiveux/syncthing`
-  * `latest`, `v1.2`, `v1.2.0`, `v1.2.0-2` ([Dockerfile.amd64](Dockerfile.amd64))
-  * `latest-arm32v6`, `v1.2-arm32v6`, `v1.2.0-arm32v6`, `v1.2.0-2-arm32v6` ([Dockerfile.arm32v6](Dockerfile.arm32v6))
+  * `latest`, `v1.2`, `v1.2.1` ([Dockerfile.amd64](Dockerfile.amd64))
+  * `latest-arm32v6`, `v1.2-arm32v6`, `v1.2.1-arm32v6` ([Dockerfile.arm32v6](Dockerfile.arm32v6))
 
 ## Usage
 
@@ -104,6 +104,8 @@ Tweak `Dockerfile.j2` to your convenience (we are using [Jinja2](http://jinja.po
 ```shell
 make dockerfiles
 ```
+
+**Note**: if you are upgrading Syncthing to a newer version, also [sync the config file version](https://github.com/syncthing/syncthing/blob/master/lib/config/config.go#L33) !
 
 Commit changes and submit a **Pull Request**.
 
