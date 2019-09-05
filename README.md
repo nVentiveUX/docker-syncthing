@@ -109,6 +109,22 @@ make dockerfiles
 
 Commit changes and submit a **Pull Request**.
 
+### Releasing a new version
+
+Bump the version using [bump2version](https://github.com/c4urself/bump2version):
+
+```shell
+pipenv run bump2version --new-version <VERSION> patch
+```
+
+Example: new syncthing release v2.2.4 is released but current version of the image is v1.2.1:
+
+```shell
+pipenv run bump2version --new-version 2.2.4-0 patch
+```
+
+This will update to syncthing version **v2.2.4** and tag the image with **v2.2.4-0**.
+
 ## References
 
 * Inspiration taken from [tianon/dockerfiles](https://github.com/tianon/dockerfiles).
