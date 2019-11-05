@@ -2,7 +2,7 @@
 
 set -euv -o pipefail
 
-QEMU_VERSION="${1:?Missing QEMU_VERSION as first argument}"
+QEMU_VERSION="${QEMU_VERSION:?Missing in environment}"
 
 docker run --rm --privileged multiarch/qemu-user-static:register --reset
 curl -SLO https://github.com/multiarch/qemu-user-static/releases/download/v${QEMU_VERSION}/qemu-arm-static.tar.gz
