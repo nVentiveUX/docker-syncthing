@@ -1,0 +1,11 @@
+#!/bin/bash
+
+set -euv -o pipefail
+
+DOCKER_USERNAME="${DOCKER_USERNAME:?Missing in environment}"
+DOCKER_PASSWORD="${DOCKER_PASSWORD:?Missing in environment}"
+DOCKER_IMAGE="${DOCKER_IMAGE:?Missing in environment}"
+
+echo "${DOCKER_PASSWORD}" | docker login -u "${DOCKER_USERNAME}" --password-stdin
+docker push "${DOCKER_IMAGE}"
+docker logout

@@ -13,11 +13,8 @@ env:
     - ARCH="amd64"
     - ARCH="arm32v6"
 
-before_script: ./scripts/install-qemu ${QEMU_VERSION}
+before_script: ./scripts/install-qemu
 
 script: ./scripts/image-build
 
-after_success:
-  - echo "${DOCKER_PASSWORD}" | docker login -u "${DOCKER_USERNAME}" --password-stdin
-  - docker push "${DOCKER_IMAGE}"
-  - docker logout
+after_success: ./scripts/image-push
