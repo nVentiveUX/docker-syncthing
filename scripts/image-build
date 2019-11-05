@@ -2,7 +2,7 @@
 
 set -euv -o pipefail
 
-ARCH="${1:?Missing in environment}"
+ARCH="${ARCH:?Missing in environment}"
 
 dockerfile="Dockerfile.${ARCH}"
 
