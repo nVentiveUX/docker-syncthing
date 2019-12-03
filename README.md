@@ -17,8 +17,8 @@ Tested on:
 ## Available image tags
 
 * `nventiveux/syncthing`
-  * `latest`, `v1.3.1` ([Dockerfile.amd64](Dockerfile.amd64))
-  * `latest-arm32v6`, `v1.3.1-arm32v6` ([Dockerfile.arm32v6](Dockerfile.arm32v6))
+  * `latest`, `v1.3.2` ([Dockerfile.amd64](Dockerfile.amd64))
+  * `latest-arm32v6`, `v1.3.2-arm32v6` ([Dockerfile.arm32v6](Dockerfile.arm32v6))
 
 ## Usage
 
@@ -117,7 +117,7 @@ Bump the version using [bump2version](https://github.com/c4urself/bump2version):
 pipenv run bump2version --new-version <VERSION> patch
 ```
 
-Example: new syncthing release v2.2.4 is released but current version of the image is v1.3.1:
+Example: new syncthing release v2.2.4 is released but current version of the image is v1.3.2:
 
 ```shell
 pipenv run bump2version --new-version 2.2.4-0 patch
