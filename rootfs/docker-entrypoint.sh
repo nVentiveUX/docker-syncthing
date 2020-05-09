@@ -28,4 +28,4 @@ sed -i -r \
     /etc/syncthing/config.xml
 printf "DONE.\\n"
 
-exec su-exec syncthing "$@"
+exec su-exec syncthing -home /etc/syncthing "$@"
