@@ -22,7 +22,13 @@ ENV SYNCTHING_GPG_KEY="37C84554E7E0A261E4F76E1ED26E6ED000654A3E" \
     SYNCTHING_ARCH="arm"
 
 RUN set -ex \
-  && apk add --no-cache bash shadow su-exec py3-bcrypt py3-cryptography
+  && apk add --no-cache \
+    bash \
+    coreutils \
+    py3-bcrypt \
+    py3-cryptography \
+    shadow \
+    su-exec
 
 RUN set -ex \
   && apk add --no-cache --virtual .temp-deps gnupg openssl \
