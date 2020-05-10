@@ -41,9 +41,9 @@ fi
 
 if ownerships=$(get_ownerships /etc/syncthing)
 then
-    if [[ "${ownerships}" != "${SYNCTHING_USER}":"${SYNCTHING_GROUP}" ]]
+    if [[ "${ownerships}" != "${SYNCTHING_USER_UID}":"${SYNCTHING_GROUP_GID}" ]]
     then
-        printf "* Set ownerships of files: %s ... " "${SYNCTHING_USER}":"${SYNCTHING_GROUP}"
+        printf "* Set ownerships of files: %s ... " "${SYNCTHING_USER_UID}":"${SYNCTHING_GROUP_GID}"
         chown -R \
             "${SYNCTHING_USER}":"${SYNCTHING_GROUP}" \
             "/etc/syncthing" \
