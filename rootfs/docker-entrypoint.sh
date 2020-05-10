@@ -1,8 +1,28 @@
 #!/bin/bash
 
-set -eu -o pipefail
+set -u -o pipefail
+trap 'on_error ${LINENO}' ERR
 
 SYNCTHING_ADMIN_PASSWORD_HASH="$(python3 -c 'import bcrypt, os; print(bcrypt.hashpw(os.getenv("SYNCTHING_ADMIN_PASSWORD").encode("utf-8"), bcrypt.gensalt()).decode("utf-8"))')"
+
+on_error() {
+    printf "\\nEntrypoint terminated. Error encountered on line %s\\n" "${1}"
+    exit 2
+}
+
+get_ownerships() {
+    local path="${1}"; shift
+
+    output=$(stat --printf='%u:%g' "${path}" 2>/dev/null); rc=$?
+    if [[ ${rc} == 0 ]]
+    then
+        printf "%s\\n" "${output}"
+        return 0
+    else
+        printf "Error: cannot get ownership of \"%s\" !\\n" "${path}"
+        return 1
+    fi
+}
 
 printf "* Generated salted password: %s\\n" "${SYNCTHING_ADMIN_PASSWORD_HASH}"
 
@@ -19,7 +39,25 @@ else
     printf "DONE.\\n"
 fi
 
-chown -R "${SYNCTHING_USER}":"${SYNCTHING_GROUP}" /etc/syncthing /var/lib/syncthing
+if ownerships=$(get_ownerships /etc/syncthing)
+then
+    if [[ "${ownerships}" != "${SYNCTHING_USER}":"${SYNCTHING_GROUP}" ]]
+    then
+        printf "* Set ownerships of files: %s ... " "${SYNCTHING_USER}":"${SYNCTHING_GROUP}"
+        chown -R \
+            "${SYNCTHING_USER}":"${SYNCTHING_GROUP}" \
+            "/etc/syncthing" \
+            "/var/lib/syncthing"
+        printf "DONE.\\n"
+    else
+        printf "* Ownerships of files are up-to-date.\\n"
+    fi
+else
+    rc=$?
+    printf "%s\\n" "${ownerships}"
+    printf "Fatal error on line %s.\\n" "${LINENO}"
+    exit ${rc}
+fi
 
 printf "* Updating configuration file... "
 sed -i -r \
