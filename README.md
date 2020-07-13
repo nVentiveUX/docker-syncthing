@@ -8,11 +8,13 @@ Syncthing Docker image for RaspberryPi / amd64 systems.
 
 See [Syncthing](https://syncthing.net/) website for more.
 
-Tested on:
+Tested on following archs:
 
-* Archlinux (amd64)
-* RaspberryPi 2 (Model B)
-* RaspberryPi 3 (Model B)
+* x64
+
+Following arch are missing tests:
+
+* arm32v6
 
 ## Available image tags
 
