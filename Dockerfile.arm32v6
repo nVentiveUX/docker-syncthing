@@ -18,7 +18,7 @@ ENV SYNCTHING_USER="syncthing" \
 
 # gpg: key 00654A3E: public key "Syncthing Release Management <release@syncthing.net>" imported
 ENV SYNCTHING_GPG_KEY="37C84554E7E0A261E4F76E1ED26E6ED000654A3E" \
-    SYNCTHING_VERSION="1.8.0" \
+    SYNCTHING_VERSION="1.9.0" \
     SYNCTHING_ARCH="arm"
 
 RUN set -ex \
