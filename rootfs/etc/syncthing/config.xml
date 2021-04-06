@@ -1,4 +1,4 @@
-<configuration version="34">
+<configuration version="35">
     <gui enabled="true" tls="true" debugging="false">
         <address>0.0.0.0:8384</address>
         <authMode>static</authMode>
