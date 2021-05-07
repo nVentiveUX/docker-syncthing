@@ -1,3 +1,8 @@
+[[source]]
+name = "pypi"
+url = "https://pypi.org/simple"
+verify_ssl = true
+
 [packages]
 j2cli = ">=0.3.10,<0.4"
 bump2version = "<0.6,>=0.5"
