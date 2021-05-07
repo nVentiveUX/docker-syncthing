@@ -7,10 +7,13 @@ ARCH = amd64 arm32v6
 dockerfiles: install $(ARCH)
 
 .PHONY: install
-install:
-	@pipenv install
+install: .venv
 
 # Files
 #
+.venv:
+	@[[ -d .venv ]] || mkdir .venv
+	@pipenv install --dev
+
 $(ARCH):
 	ARCH=$@ pipenv run j2 Dockerfile.j2 > Dockerfile.$@
