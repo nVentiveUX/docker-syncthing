@@ -1,0 +1,3 @@
+ignored:
+  # Alpine package pinning
+  - "DL3018"

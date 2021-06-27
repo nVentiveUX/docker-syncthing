@@ -1,9 +1,11 @@
-FROM arm32v6/alpine:3.11
+FROM arm32v6/alpine:3.13
 
 LABEL authors="nVentiveUX <https://github.com/nVentiveUX>"
 LABEL license="MIT"
 LABEL description="Docker image for syncthing installation. \
 Think for ARM / x64 devices."
+
+SHELL [ "/bin/ash", "-eo", "pipefail", "-c" ]
 
 # Install static QEMU for ARM build from Travis CI
 COPY qemu-arm-static /usr/bin/qemu-arm-static
@@ -16,28 +18,29 @@ ENV SYNCTHING_USER="syncthing" \
     SYNCTHING_ADMIN_USER="admin" \
     SYNCTHING_ADMIN_PASSWORD="admin"
 
-# gpg: key 00654A3E: public key "Syncthing Release Management <release@syncthing.net>" imported
-ENV SYNCTHING_GPG_KEY="37C84554E7E0A261E4F76E1ED26E6ED000654A3E" \
+ENV SYNCTHING_GPG_KEY1="49F5AEC0BCE524C7" \
+    SYNCTHING_GPG_KEY2="D26E6ED000654A3E" \
     SYNCTHING_VERSION="1.17.0" \
     SYNCTHING_ARCH="arm"
 
-RUN set -ex \
+RUN set -x \
   && apk add --no-cache \
     bash \
     coreutils \
     py3-bcrypt \
     py3-cryptography \
     shadow \
-    su-exec
-
-RUN set -ex \
-  && apk add --no-cache --virtual .temp-deps gnupg openssl \
+    su-exec \
+  && apk add --no-cache --virtual .temp-deps \
+    gnupg \
+    openssl \
   && tarball="syncthing-linux-${SYNCTHING_ARCH}-v${SYNCTHING_VERSION}.tar.gz" \
-  && wget \
+  && wget --quiet \
     "https://github.com/syncthing/syncthing/releases/download/v${SYNCTHING_VERSION}/$tarball" \
     "https://github.com/syncthing/syncthing/releases/download/v${SYNCTHING_VERSION}/sha1sum.txt.asc" \
-  && export GNUPGHOME="$(mktemp -d)" \
-  && gpg --keyserver ha.pool.sks-keyservers.net --recv-keys "${SYNCTHING_GPG_KEY}" \
+  && GNUPGHOME="$(mktemp -d)" \
+  && export GNUPGHOME \
+  && gpg --keyserver pgp.cyberbits.eu --recv-keys "${SYNCTHING_GPG_KEY1}" "${SYNCTHING_GPG_KEY2}" \
   && gpg --batch --decrypt --output sha1sum.txt sha1sum.txt.asc \
   && grep -E " ${tarball}\$" sha1sum.txt | sha1sum -c - \
   && rm -rf "$GNUPGHOME" sha1sum.txt sha1sum.txt.asc \
@@ -47,9 +50,7 @@ RUN set -ex \
   && rm "$tarball" \
   && mv "$bin" /usr/local/bin/syncthing \
   && rmdir "$dir" \
-  && apk del .temp-deps;
-
-RUN set -ex \
+  && apk del .temp-deps \
   && mkdir -p /etc/syncthing /var/lib/syncthing
 
 COPY rootfs/ /
