@@ -1,14 +1,17 @@
-FROM {{ ARCH + '/' if ARCH != 'amd64' else '' }}alpine:3.11
+FROM {{ ARCH + '/' if ARCH != 'amd64' else '' }}alpine:3.13
 
 LABEL authors="nVentiveUX <https://github.com/nVentiveUX>"
 LABEL license="MIT"
 LABEL description="Docker image for syncthing installation. \
 Think for ARM / x64 devices."
 
+SHELL [ "/bin/ash", "-eo", "pipefail", "-c" ]
+
 {% if ARCH == 'arm32v6' -%}
 # Install static QEMU for ARM build from Travis CI
 COPY qemu-arm-static /usr/bin/qemu-arm-static
-{%- endif %}
+
+{% endif -%}
 
 # User definition environment variables
 ENV SYNCTHING_USER="syncthing" \
@@ -27,22 +30,23 @@ ENV SYNCTHING_GPG_KEY="37C84554E7E0A261E4F76E1ED26E6ED000654A3E" \
     SYNCTHING_ARCH="amd64"
 {%- endif %}
 
-RUN set -ex \
+RUN set -x \
   && apk add --no-cache \
     bash \
     coreutils \
     py3-bcrypt \
     py3-cryptography \
     shadow \
-    su-exec
-
-RUN set -ex \
-  && apk add --no-cache --virtual .temp-deps gnupg openssl \
+    su-exec \
+  && apk add --no-cache --virtual .temp-deps \
+    gnupg \
+    openssl \
   && tarball="syncthing-linux-${SYNCTHING_ARCH}-v${SYNCTHING_VERSION}.tar.gz" \
-  && wget \
+  && wget --quiet \
     "https://github.com/syncthing/syncthing/releases/download/v${SYNCTHING_VERSION}/$tarball" \
     "https://github.com/syncthing/syncthing/releases/download/v${SYNCTHING_VERSION}/sha1sum.txt.asc" \
-  && export GNUPGHOME="$(mktemp -d)" \
+  && GNUPGHOME="$(mktemp -d)" \
+  && export GNUPGHOME \
   && gpg --keyserver ha.pool.sks-keyservers.net --recv-keys "${SYNCTHING_GPG_KEY}" \
   && gpg --batch --decrypt --output sha1sum.txt sha1sum.txt.asc \
   && grep -E " ${tarball}\$" sha1sum.txt | sha1sum -c - \
@@ -53,9 +57,7 @@ RUN set -ex \
   && rm "$tarball" \
   && mv "$bin" /usr/local/bin/syncthing \
   && rmdir "$dir" \
-  && apk del .temp-deps;
-
-RUN set -ex \
+  && apk del .temp-deps \
   && mkdir -p /etc/syncthing /var/lib/syncthing
 
 COPY rootfs/ /
