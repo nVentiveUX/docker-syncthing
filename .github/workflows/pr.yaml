@@ -1,0 +1,53 @@
+name: "PR"
+
+on:
+  pull_request:
+    branches:
+      - "master"
+      - "develop"
+
+jobs:
+  lint:
+    name: "Linting"
+    runs-on: "ubuntu-20.04"
+    strategy:
+      matrix:
+        arch: ["amd64", "arm32v6"]
+
+    steps:
+      - uses: "actions/checkout@v2"
+
+      - name: "Lint Dockerfile: ${{ matrix.arch }}"
+        uses: "brpaz/hadolint-action@v1.4.0"
+        with:
+          dockerfile: "Dockerfile.${{ matrix.arch }}"
+
+  build:
+    name: "Build"
+    runs-on: "ubuntu-20.04"
+    strategy:
+      matrix:
+        arch: ["amd64", "arm32v6"]
+    env:
+      DOCKER_BUILDKIT: "1"
+      QEMU_VERSION: "4.0.0-2"
+
+    steps:
+      - uses: "actions/checkout@v2"
+
+      - name: "Install QEMU"
+        if: ${{ success() && matrix.arch == 'arm32v6' }}
+        run: |
+          ./scripts/install-qemu
+
+      - name: "Build image: ${{ matrix.arch }}"
+        run: |
+          if [[ "${{ matrix.arch }}" == "arm32v6" ]]
+          then
+            docker run \
+              --rm \
+              --privileged \
+              multiarch/qemu-user-static:register --reset
+          fi
+
+          docker build -f Dockerfile.${{ matrix.arch }} .

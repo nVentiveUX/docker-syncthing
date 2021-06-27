@@ -2,7 +2,7 @@
 
 set -e -o pipefail
 
-DOCKER_IMAGE="${DOCKER_IMAGE?Not found in environment}"
+IMAGE_NAME="${IMAGE_NAME?Not found in environment}"
 ARCH="${ARCH?Not found in environment}"
 
 version_arg="${1-}"
@@ -26,5 +26,5 @@ minor="$(printf "%s" "${version}" "${ARCH}" | cut -d"." -f1-2)${arch_tag}"
 
 for tag in ${full_version} ${version} ${minor}
 do
-    docker tag "${DOCKER_IMAGE}:latest${arch_tag}" "${DOCKER_IMAGE}:${tag}"
+    docker tag "${IMAGE_NAME}:${tag}"
 done
