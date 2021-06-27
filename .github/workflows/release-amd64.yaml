@@ -20,7 +20,7 @@ jobs:
       - uses: "actions/checkout@v2"
 
       - name: "Build unstable image"
-        if: ${{ success() && startsWith(github.ref, "refs/heads/") }}
+        if: ${{ success() && startsWith(github.ref, 'refs/heads/') }}
         run: |
           version="$(date +%Y.%m.%d)"
           branch_name="${GITHUB_REF#refs/heads/}"
@@ -33,7 +33,7 @@ jobs:
           docker images
 
       - name: "Build stable image"
-        if: ${{ success() && startsWith(github.ref, "refs/tags/") }}
+        if: ${{ success() && startsWith(github.ref, 'refs/tags/') }}
         run: |
           version="${GITHUB_REF#refs/tags/v}"
 
