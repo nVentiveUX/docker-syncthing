@@ -15,8 +15,8 @@ ENV SYNCTHING_USER="syncthing" \
     SYNCTHING_ADMIN_USER="admin" \
     SYNCTHING_ADMIN_PASSWORD="admin"
 
-# gpg: key 00654A3E: public key "Syncthing Release Management <release@syncthing.net>" imported
-ENV SYNCTHING_GPG_KEY="37C84554E7E0A261E4F76E1ED26E6ED000654A3E" \
+ENV SYNCTHING_GPG_KEY1="49F5AEC0BCE524C7" \
+    SYNCTHING_GPG_KEY2="D26E6ED000654A3E" \
     SYNCTHING_VERSION="1.17.0" \
     SYNCTHING_ARCH="amd64"
 
@@ -37,7 +37,7 @@ RUN set -x \
     "https://github.com/syncthing/syncthing/releases/download/v${SYNCTHING_VERSION}/sha1sum.txt.asc" \
   && GNUPGHOME="$(mktemp -d)" \
   && export GNUPGHOME \
-  && gpg --keyserver ha.pool.sks-keyservers.net --recv-keys "${SYNCTHING_GPG_KEY}" \
+  && gpg --keyserver ha.pool.sks-keyservers.net --recv-keys "${SYNCTHING_GPG_KEY1}" "${SYNCTHING_GPG_KEY2}" \
   && gpg --batch --decrypt --output sha1sum.txt sha1sum.txt.asc \
   && grep -E " ${tarball}\$" sha1sum.txt | sha1sum -c - \
   && rm -rf "$GNUPGHOME" sha1sum.txt sha1sum.txt.asc \
