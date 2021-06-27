@@ -40,7 +40,7 @@ RUN set -x \
     "https://github.com/syncthing/syncthing/releases/download/v${SYNCTHING_VERSION}/sha1sum.txt.asc" \
   && GNUPGHOME="$(mktemp -d)" \
   && export GNUPGHOME \
-  && gpg --keyserver ha.pool.sks-keyservers.net --recv-keys "${SYNCTHING_GPG_KEY1}" "${SYNCTHING_GPG_KEY2}" \
+  && gpg --keyserver pgp.cyberbits.eu --recv-keys "${SYNCTHING_GPG_KEY1}" "${SYNCTHING_GPG_KEY2}" \
   && gpg --batch --decrypt --output sha1sum.txt sha1sum.txt.asc \
   && grep -E " ${tarball}\$" sha1sum.txt | sha1sum -c - \
   && rm -rf "$GNUPGHOME" sha1sum.txt sha1sum.txt.asc \
