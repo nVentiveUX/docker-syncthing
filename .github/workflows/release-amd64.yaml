@@ -38,7 +38,7 @@ jobs:
           version="${GITHUB_REF#refs/tags/v}"
 
           docker build \
-            -t ${IMAGE_NAME}:latest-${ARCH} \
+            -t ${IMAGE_NAME}:latest \
             -f Dockerfile.${ARCH} .
 
           ./scripts/image-tag "${version}"

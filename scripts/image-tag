@@ -26,5 +26,5 @@ minor="$(printf "%s" "${version}" "${ARCH}" | cut -d"." -f1-2)${arch_tag}"
 
 for tag in ${full_version} ${version} ${minor}
 do
-    docker tag "${IMAGE_NAME}:${tag}"
+    docker tag "${IMAGE_NAME}:latest${arch_tag}" "${IMAGE_NAME}:${tag}"
 done
