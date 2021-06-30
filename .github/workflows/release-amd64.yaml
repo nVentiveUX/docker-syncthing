@@ -41,7 +41,7 @@ jobs:
             -t ${IMAGE_NAME}:latest-${ARCH} \
             -f Dockerfile.${ARCH} .
 
-          ./scripts/image_tag "${version}"
+          ./scripts/image-tag "${version}"
 
           docker images
 
