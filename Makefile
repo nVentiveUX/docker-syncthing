@@ -12,7 +12,7 @@ install: .venv
 # Files
 #
 .venv:
-	@[[ -d .venv ]] || mkdir .venv
+	@mkdir -v "$@"
 	@pipenv install --dev
 
 $(ARCH):
