@@ -57,7 +57,7 @@ COPY rootfs/ /
 
 VOLUME ["/etc/syncthing", "/var/lib/syncthing"]
 
-EXPOSE 8384/tcp 22000/tcp 21027/udp
+EXPOSE 8384/tcp 22000/tcp 22000/udp 21027/udp
 
 ENTRYPOINT ["/docker-entrypoint.sh"]
 
