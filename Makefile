@@ -9,6 +9,14 @@ dockerfiles: install $(ARCH)
 .PHONY: install
 install: .venv
 
+.PHONY: tests
+tests:
+	docker run -it --rm --name syncthing_tests nventiveux/syncthing:develop
+
+.PHONY: clean
+clean:
+	docker image rm nventiveux/syncthing:develop
+
 # Files
 #
 .venv:
