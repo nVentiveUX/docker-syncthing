@@ -18,7 +18,7 @@ Following arch are missing tests:
 
 ## Available image tags
 
-* `nventiveux/syncthing`
+* [nventiveux/syncthing](https://hub.docker.com/r/nventiveux/syncthing)
   * `latest`, `v1.20.1` ([Dockerfile.amd64](Dockerfile.amd64))
   * `latest-arm32v6`, `v1.20.1-arm32v6` ([Dockerfile.arm32v6](Dockerfile.arm32v6))
 
