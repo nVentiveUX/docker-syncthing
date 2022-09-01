@@ -107,7 +107,7 @@ Tweak `Dockerfile.j2` to your convenience (we are using [Jinja2](http://jinja.po
 make dockerfiles
 ```
 
-**Note**: if you are upgrading Syncthing to a newer version, also [sync the config file version](https://github.com/syncthing/syncthing/blob/main/lib/config/config.go#L32) !
+**Note**: if you are upgrading Syncthing to a newer version, also [sync the config file version](https://github.com/syncthing/syncthing/blob/main/lib/config/config.go#L31) !
 
 Commit changes and submit a **Pull Request**.
 
