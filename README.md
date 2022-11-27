@@ -15,12 +15,12 @@ Tested on following archs:
 Following arch are missing tests:
 
 * arm32v6
+* armv7
 
 ## Available image tags
 
 * [nventiveux/syncthing](https://hub.docker.com/r/nventiveux/syncthing)
-  * `latest`, `v1.22.0` ([Dockerfile.amd64](Dockerfile.amd64))
-  * `latest-arm32v6`, `v1.22.0-arm32v6` ([Dockerfile.arm32v6](Dockerfile.arm32v6))
+  * `latest`, `v1.22.0` ([Dockerfile](./Dockerfile))
 
 ## Usage
 
@@ -101,11 +101,7 @@ Prepare your environment:
 make install
 ```
 
-Tweak `Dockerfile.j2` to your convenience (we are using [Jinja2](http://jinja.pocoo.org/)) and update templates with:
-
-```shell
-make dockerfiles
-```
+Tweak `Dockerfile` to your convenience.
 
 **Note**: if you are upgrading Syncthing to a newer version, also [sync the config file version](https://github.com/syncthing/syncthing/blob/main/lib/config/config.go#L31) !
 
@@ -113,19 +109,11 @@ Commit changes and submit a **Pull Request**.
 
 ### Releasing a new version
 
-Bump the version using [bump2version](https://github.com/c4urself/bump2version):
+Bump the version using [bump2version](https://github.com/c4urself/bump2version) using `<SYNCTHING_VERSION>-<PATCH>` for `<VERSION>`:
 
 ```shell
 pipenv run bump2version --new-version <VERSION> patch
 ```
-
-Example: new syncthing release v2.2.4 is released but current version of the image is v1.22.0:
-
-```shell
-pipenv run bump2version --new-version 2.2.4-0 patch
-```
-
-This will update to syncthing version **v2.2.4** and tag the image with **v2.2.4-0**.
 
 ## References
 

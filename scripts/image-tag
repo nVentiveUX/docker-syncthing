@@ -3,28 +3,20 @@
 set -e -o pipefail
 
 IMAGE_NAME="${IMAGE_NAME?Not found in environment}"
-ARCH="${ARCH?Not found in environment}"
 
 version_arg="${1-}"
 
 if [[ ! "${version_arg}" ]]
 then
-    printf "First argument must be a version string of the form \"v<major>.<minor>.<patch>-<rev>\". Exiting.\\n"
+    printf "First argument must be a version string of the form \"<major>.<minor>.<patch>-<rev>\". Exiting.\\n"
     exit 1
 fi
 
-if [[ "${ARCH}" == "amd64" ]]
-then
-    arch_tag=""
-else
-    arch_tag="-${ARCH}"
-fi
+full_version="${version_arg}"
+version="$(printf "%s" "${full_version}" | cut -d"-" -f1)"
+minor="$(printf "%s" "${version}" | cut -d"." -f1-2)"
 
-full_version="${version_arg}${arch_tag}"
-version="$(printf "%s" "${full_version}" "${ARCH}" | cut -d"-" -f1)${arch_tag}"
-minor="$(printf "%s" "${version}" "${ARCH}" | cut -d"." -f1-2)${arch_tag}"
-
-for tag in ${full_version} ${version} ${minor}
+for tag in latest ${full_version} ${version} ${minor}
 do
-    docker tag "${IMAGE_NAME}:latest${arch_tag}" "${IMAGE_NAME}:${tag}"
+    printf "%s:%s," "${IMAGE_NAME}" "${tag}"
 done
