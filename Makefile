@@ -3,7 +3,8 @@ SHELL = /bin/bash
 # Tasks
 #
 .PHONY: install
-install: .venv
+install:
+	@poetry install
 
 .PHONY: tests
 tests:
@@ -13,8 +14,13 @@ tests:
 clean:
 	docker image rm local/syncthing:latest
 
-# Files
-#
-.venv:
-	@mkdir -v "$@"
-	@pipenv install --dev
+.PHONY: release
+release: version=""
+release:
+	@{ [[ -z "${version}" ]] || exit 0; } && { echo "Missing syncthing version !"; exit 1; }
+	sed -i -r -e "s/SYNCTHING_VERSION=\".*\"/SYNCTHING_VERSION=\"${version}\"/" Dockerfile
+	sed -i -r -e "s/\`v[0-9]+\.[0-9]+\.[0-9]+\`/\`v${version}\`/" README.md
+
+.PHONY: bump
+bump:
+	@poetry run cz bump --changelog
