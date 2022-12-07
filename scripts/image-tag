@@ -13,7 +13,7 @@ then
 fi
 
 full_version="${version_arg}"
-version="$(printf "%s" "${full_version}" | cut -d"-" -f1)"
+version="$(printf "%s" "${full_version}" | cut -d"." -f1-3)"
 minor="$(printf "%s" "${version}" | cut -d"." -f1-2)"
 
 for tag in latest ${full_version} ${version} ${minor}
