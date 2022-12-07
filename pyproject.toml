@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "docker-syncthing"
-version = "1.22.1.post0"
+version = "1.23.0"
 description = "Syncthing as a container using Docker"
 authors = ["BESANCON Vincent <besancon.vincent@gmail.com>"]
 license = "MIT"
@@ -18,7 +18,7 @@ build-backend = "poetry.core.masonry.api"
 
 [tool.commitizen]
 name = "cz_conventional_commits"
-version = "1.22.1.post0"
+version = "1.23.0"
 tag_format = "v$version"
 version_files = [
     "pyproject.toml:version"
