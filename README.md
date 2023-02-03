@@ -109,10 +109,11 @@ Commit changes and submit a **Pull Request**.
 
 ### Releasing a new version
 
-Bump the version using [bump2version](https://github.com/c4urself/bump2version) using `<SYNCTHING_VERSION>-<PATCH>` for `<VERSION>`:
+Bump the version using:
 
 ```shell
-pipenv run bump2version --new-version <VERSION> patch
+make release version=<VERSION>
+poetry run cz bump --changelog <VERSION>
 ```
 
 ## References

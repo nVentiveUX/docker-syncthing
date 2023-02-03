@@ -20,4 +20,3 @@ release:
 	@{ [[ -z "${version}" ]] || exit 0; } && { echo "Missing syncthing version !"; exit 1; }
 	sed -i -r -e "s/SYNCTHING_VERSION=\".*\"/SYNCTHING_VERSION=\"${version}\"/" Dockerfile
 	sed -i -r -e "s/\`v[0-9]+\.[0-9]+\.[0-9]+\`/\`v${version}\`/" README.md
-	poetry run cz bump --changelog "${version}"
