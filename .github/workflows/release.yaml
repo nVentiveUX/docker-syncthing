@@ -9,6 +9,8 @@ jobs:
   release:
     name: "Docker image"
     runs-on: "ubuntu-22.04"
+    permissions:
+      contents: write
     env:
       IMAGE_NAME: "nventiveux/syncthing"
       DOCKER_BUILDKIT: "1"
@@ -55,3 +57,8 @@ jobs:
           username: "${{ secrets.DOCKER_USERNAME }}"
           password: "${{ secrets.DOCKER_PASSWORD }}"
           repository: "${{ env.IMAGE_NAME }}"
+
+      - name: "Create release"
+        uses: ncipollo/release-action@v1
+        with:
+          generateReleaseNotes: true
