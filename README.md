@@ -113,7 +113,7 @@ Bump the version using:
 
 ```shell
 make release version=<VERSION>
-# Commit...
+# Commit & pull request...
 poetry run cz bump --changelog <VERSION>
 ```
 
