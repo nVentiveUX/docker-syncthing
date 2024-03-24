@@ -20,7 +20,7 @@ Following arch are missing tests:
 ## Available image tags
 
 * [nventiveux/syncthing](https://hub.docker.com/r/nventiveux/syncthing)
-  * `latest`, `v1.27.2` ([Dockerfile](./Dockerfile))
+  * `latest`, `v1.27.4` ([Dockerfile](./Dockerfile))
 
 ## Usage
 
@@ -114,7 +114,7 @@ Bump the version using:
 ```shell
 make release version=<VERSION>
 # Commit & pull request...
-poetry run cz bump --changelog <VERSION>
+rye run cz bump --changelog <VERSION>
 ```
 
 ## References

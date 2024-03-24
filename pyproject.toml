@@ -1,18 +1,29 @@
-[tool.poetry]
+[project]
 name = "docker-syncthing"
 version = "1.27.2"
 description = "Syncthing as a container using Docker"
-authors = ["BESANCON Vincent <besancon.vincent@gmail.com>"]
-license = "MIT"
+authors = [
+    { name = "BESANCON Vincent", email = "besancon.vincent@gmail.com" }
+]
+dependencies = [
+    "commitizen>=3.20.0",
+]
 readme = "README.md"
-
-[tool.poetry.dependencies]
-python = "^3.10"
-commitizen = "^2.37.1"
+requires-python = ">= 3.11"
 
 [build-system]
-requires = ["poetry-core"]
-build-backend = "poetry.core.masonry.api"
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.rye]
+managed = true
+dev-dependencies = []
+
+[tool.hatch.metadata]
+allow-direct-references = true
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/docker_syncthing"]
 
 #==== COMMITIZEN ====
 
