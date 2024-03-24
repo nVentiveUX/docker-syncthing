@@ -114,7 +114,7 @@ Bump the version using:
 ```shell
 make release version=<VERSION>
 # Commit & pull request...
-poetry run cz bump --changelog <VERSION>
+rye run cz bump --changelog <VERSION>
 ```
 
 ## References
