@@ -20,7 +20,7 @@ Following arch are missing tests:
 ## Available image tags
 
 * [nventiveux/syncthing](https://hub.docker.com/r/nventiveux/syncthing)
-  * `latest`, `v1.27.4` ([Dockerfile](./Dockerfile))
+  * `latest`, `v1.27.5` ([Dockerfile](./Dockerfile))
 
 ## Usage
 
