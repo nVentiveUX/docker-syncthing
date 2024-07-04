@@ -20,7 +20,7 @@ Following arch are missing tests:
 ## Available image tags
 
 * [nventiveux/syncthing](https://hub.docker.com/r/nventiveux/syncthing)
-  * `latest`, `v1.27.6` ([Dockerfile](./Dockerfile))
+  * `latest`, `v1.27.9` ([Dockerfile](./Dockerfile))
 
 ## Usage
 
@@ -89,8 +89,8 @@ docker run \
 
 Pre-requisites:
 
-* Python >=3.7
-* [Pipenv](https://github.com/pypa/pipenv)
+* Python >=3.11
+* [Rye](https://rye.astral.sh/)
 * make
 * Bash >=4
 * Git >=2.18
@@ -112,9 +112,11 @@ Commit changes and submit a **Pull Request**.
 Bump the version using:
 
 ```shell
+git switch -c release/next
 make release version=<VERSION>
-# Commit & pull request...
+git commit -a -m "feat(core): bump syncthing to <VERSION>"
 rye run cz bump --changelog <VERSION>
+# Open a pull request
 ```
 
 ## References
