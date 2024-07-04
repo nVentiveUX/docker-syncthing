@@ -4,7 +4,7 @@ SHELL = /bin/bash
 #
 .PHONY: install
 install:
-	@poetry install
+	@rye sync
 
 .PHONY: tests
 tests:
