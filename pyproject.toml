@@ -1,35 +1,21 @@
 [project]
 name = "docker-syncthing"
-version = "1.28.1"
+version = "1.29.2"
 description = "Syncthing as a container using Docker"
 authors = [
     { name = "BESANCON Vincent", email = "besancon.vincent@gmail.com" }
 ]
+readme = "README.md"
+requires-python = ">= 3.11"
 dependencies = [
     "commitizen>=3.20.0",
 ]
-readme = "README.md"
-requires-python = ">= 3.11"
-
-[build-system]
-requires = ["hatchling"]
-build-backend = "hatchling.build"
-
-[tool.rye]
-managed = true
-dev-dependencies = []
-
-[tool.hatch.metadata]
-allow-direct-references = true
-
-[tool.hatch.build.targets.wheel]
-packages = ["src/docker_syncthing"]
 
 #==== COMMITIZEN ====
 
 [tool.commitizen]
 name = "cz_conventional_commits"
-version = "1.28.1"
+version = "1.29.2"
 tag_format = "v$version"
 version_files = [
     "pyproject.toml:version"

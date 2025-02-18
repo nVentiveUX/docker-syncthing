@@ -6,6 +6,10 @@ SHELL = /bin/bash
 install:
 	@rye sync
 
+.PHONY: build
+build:
+	docker build -t local/syncthing:latest .
+
 .PHONY: tests
 tests:
 	docker run -it --rm --name syncthing_tests local/syncthing:latest
