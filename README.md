@@ -115,7 +115,7 @@ Bump the version using:
 git switch -c release/next
 make release version=<VERSION>
 git commit -a -m "feat(core): bump syncthing to <VERSION>"
-rye run cz bump --changelog <VERSION>
+uv run cz bump --changelog <VERSION>
 # Open a pull request
 ```
 
