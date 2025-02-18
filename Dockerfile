@@ -1,4 +1,4 @@
-FROM alpine:3.14
+FROM alpine:3.21
 
 LABEL authors="nVentiveUX <https://github.com/nVentiveUX>"
 LABEL license="MIT"
