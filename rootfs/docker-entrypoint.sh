@@ -3,7 +3,7 @@
 set -u -o pipefail
 trap 'on_error ${LINENO}' ERR
 
-SYNCTHING_ADMIN_PASSWORD_HASH="$(python3 -c 'import bcrypt, os; print(bcrypt.hashpw(os.getenv("SYNCTHING_ADMIN_PASSWORD").encode("utf-8"), bcrypt.gensalt()).decode("utf-8"))')"
+SYNCTHING_ADMIN_PASSWORD_HASH="$(python3 -c 'import bcrypt, os; print(bcrypt.hashpw(os.getenv("SYNCTHING_ADMIN_PASSWORD", default="admin").encode("utf-8"), bcrypt.gensalt()).decode("utf-8"))')"
 
 on_error() {
     printf "\\nEntrypoint terminated. Error encountered on line %s\\n" "${1}"
