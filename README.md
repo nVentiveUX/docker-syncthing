@@ -116,6 +116,7 @@ git switch -c release/next
 make release version=<VERSION>
 git commit -a -m "feat(core): bump syncthing to <VERSION>"
 uv run cz bump --changelog <VERSION>
+git push origin -u --tags HEAD
 # Open a pull request
 ```
 
