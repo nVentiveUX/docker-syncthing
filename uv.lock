@@ -100,7 +100,7 @@ wheels = [
 
 [[package]]
 name = "docker-syncthing"
-version = "1.29.2"
+version = "1.29.6"
 source = { virtual = "." }
 dependencies = [
     { name = "commitizen" },
