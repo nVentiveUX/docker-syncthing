@@ -13,7 +13,7 @@ ENV SYNCTHING_USER="syncthing" \
     SYNCTHING_GROUP="syncthing" \
     SYNCTHING_GROUP_GID=1000 \
     SYNCTHING_ADMIN_USER="admin" \
-    SYNCTHING_VERSION="1.29.6" \
+    SYNCTHING_VERSION="1.30.0" \
     SYNCTHING_ARCH="amd64"
 
 RUN set -x \
