@@ -2,16 +2,16 @@ SHELL = /bin/bash
 
 # Tasks
 #
-.PHONY: install
-install:
-	@rye sync
+.PHONY: venv
+venv:
+	@uv sync
 
 .PHONY: build
 build:
 	docker build -t local/syncthing:latest .
 
 .PHONY: tests
-tests:
+tests: build
 	docker run -it --rm --name syncthing_tests local/syncthing:latest
 
 .PHONY: clean
