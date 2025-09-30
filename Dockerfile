@@ -1,4 +1,4 @@
-FROM alpine:3.21
+FROM alpine:3.22
 
 LABEL authors="nVentiveUX <https://github.com/nVentiveUX>"
 LABEL license="MIT"
@@ -13,7 +13,7 @@ ENV SYNCTHING_USER="syncthing" \
     SYNCTHING_GROUP="syncthing" \
     SYNCTHING_GROUP_GID=1000 \
     SYNCTHING_ADMIN_USER="admin" \
-    SYNCTHING_VERSION="1.30.0" \
+    SYNCTHING_VERSION="2.0.10" \
     SYNCTHING_ARCH="amd64"
 
 RUN set -x \
@@ -46,4 +46,4 @@ EXPOSE 8384/tcp 22000/tcp 22000/udp 21027/udp
 
 ENTRYPOINT ["/docker-entrypoint.sh"]
 
-CMD ["syncthing", "-home=/etc/syncthing", "-logflags=0"]
+CMD ["syncthing", "--home=/etc/syncthing", "--logflags=0"]

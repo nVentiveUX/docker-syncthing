@@ -20,7 +20,7 @@ Following arch are missing tests:
 ## Available image tags
 
 * [nventiveux/syncthing](https://hub.docker.com/r/nventiveux/syncthing)
-  * `latest`, `v1.30.0` ([Dockerfile](./Dockerfile))
+  * `latest`, `v2.0.10` ([Dockerfile](./Dockerfile))
 
 ## Usage
 
@@ -103,7 +103,7 @@ make install
 
 Tweak `Dockerfile` to your convenience.
 
-**Note**: if you are upgrading Syncthing to a newer version, also [sync the config file version](https://github.com/syncthing/syncthing/blob/main/lib/config/config.go#L34) !
+**Note**: if you are upgrading Syncthing to a newer version, also [sync the config file version](https://github.com/syncthing/syncthing/blob/main/lib/config/config.go#L36) !
 
 Commit changes and submit a **Pull Request**.
 
