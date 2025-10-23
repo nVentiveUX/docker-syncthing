@@ -12,7 +12,7 @@ build:
 
 .PHONY: tests
 tests: build
-	docker run -it --rm --name syncthing_tests local/syncthing:latest
+	docker run -it --rm -p 8000:8384 --name syncthing_tests local/syncthing:latest
 
 .PHONY: clean
 clean:
