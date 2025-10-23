@@ -111,13 +111,19 @@ Commit changes and submit a **Pull Request**.
 
 Bump the version using:
 
-```shell
+```sh
 git switch -c release/next
 make release version=<VERSION>
 git commit -a -m "feat(core): bump syncthing to <VERSION>"
+# Open a pull request
+# Tests...
+```
+
+Release:
+
+```sh
 uv run cz bump --changelog <VERSION>
 git push origin -u --tags HEAD
-# Open a pull request
 ```
 
 ## References
