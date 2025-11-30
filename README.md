@@ -117,6 +117,8 @@ make release version=<VERSION>
 git commit -a -m "feat(core): bump syncthing to <VERSION>"
 # Open a pull request
 # Tests...
+# Merge
+# Delete release/next
 ```
 
 Release:
