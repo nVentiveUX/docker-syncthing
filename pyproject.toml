@@ -1,6 +1,6 @@
 [project]
 name = "docker-syncthing"
-version = "2.0.10"
+version = "2.0.11"
 description = "Syncthing as a container using Docker"
 authors = [
     { name = "BESANCON Vincent", email = "besancon.vincent@gmail.com" }
@@ -15,7 +15,7 @@ dependencies = [
 
 [tool.commitizen]
 name = "cz_conventional_commits"
-version = "2.0.10"
+version = "2.0.11"
 tag_format = "v$version"
 version_files = [
     "pyproject.toml:version"
