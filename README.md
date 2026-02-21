@@ -89,16 +89,16 @@ docker run \
 
 Pre-requisites:
 
-* Python >=3.11
-* [Rye](https://rye.astral.sh/)
-* make
+* [asdf](https://asdf-vm.com/)
 * Bash >=4
 * Git >=2.18
 
 Prepare your environment:
 
 ```shell
-make install
+asdf plugin install git-cliff
+asdf plugin install task
+asdf install
 ```
 
 Tweak `Dockerfile` to your convenience.
@@ -109,23 +109,25 @@ Commit changes and submit a **Pull Request**.
 
 ### Releasing a new version
 
+Update `SYNCTHING_VERSION` in `Taskfile.yml`.
+
 Bump the version using:
 
 ```sh
 git switch -c release/next
-make release version=<VERSION>
-git commit -a -m "feat(core): bump syncthing to <VERSION>"
+task bump
 # Open a pull request
 # Tests...
 # Merge
 # Delete release/next
 ```
 
-Release:
+Release with:
 
 ```sh
-uv run cz bump --changelog <VERSION>
-git push origin -u --tags HEAD
+git switch master && git pull
+task tag
+git push origin --tags
 ```
 
 ## References

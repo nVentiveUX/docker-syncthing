@@ -1,0 +1,41 @@
+version: '3'
+
+silent: true
+
+vars:
+  DOCKER_IMAGE: "nventiveux/syncthing"
+  SYNCTHING_VERSION: "2.0.13"
+
+tasks:
+  bump:
+    desc: "Bump versions and update the changelog"
+    cmds:
+      - scripts/bump.sh {{.SYNCTHING_VERSION}}
+
+  build:
+    desc: "Build the docker image"
+    cmds:
+      - docker buildx bake build --set "*.tags=${DOCKER_IMAGE}:dev"
+
+  preview-changelog:
+    desc: "Preview next changelog"
+    cmds:
+      - git cliff --bump {{.SYNCTHING_VERSION}} --unreleased
+
+  tag:
+    desc: "Create a new tag for this release"
+    prompt: "You are about to create a new release. Continue ?"
+    cmds:
+      - scripts/tag.sh {{.SYNCTHING_VERSION}}
+      - echo "Now, push commit with tags (git push origin --tags) to create the release."
+
+  tests:
+    desc: "Build and run the container for testing"
+    deps: [build]
+    cmds:
+      - docker run -it --rm -p 8000:8384 --name syncthing_tests {{.DOCKER_IMAGE}}:dev
+
+  clean:
+    desc: "Remove the local docker image"
+    cmds:
+      - docker image rm {{.DOCKER_IMAGE}}:dev
