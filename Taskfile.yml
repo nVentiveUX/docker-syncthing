@@ -4,7 +4,7 @@ silent: true
 
 vars:
   DOCKER_IMAGE: "nventiveux/syncthing"
-  SYNCTHING_VERSION: "2.0.13"
+  SYNCTHING_VERSION: "2.0.14"
 
 tasks:
   bump:
