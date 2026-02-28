@@ -50,7 +50,7 @@ conventional_commits = true
 filter_unconventional = true
 # Require all commits to be conventional.
 # Takes precedence over filter_unconventional.
-require_conventional = true
+require_conventional = false
 # Split commits on newlines, treating each line as an individual commit.
 split_commits = false
 # An array of regex based parsers to modify commit messages prior to further processing.

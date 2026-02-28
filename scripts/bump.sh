@@ -2,7 +2,7 @@
 
 set -eu
 
-next_version="${1:?Usage: $0 <next_version>}"
+next_version="$(git cliff --bumped-version)"
 
 # Checks
 if [[ -n $(git status --porcelain) ]]
@@ -11,11 +11,7 @@ then
   exit 1
 fi
 
-# Bump all versions
-sed -i -r -e "s/SYNCTHING_VERSION=\".*\"/SYNCTHING_VERSION=\"${next_version}\"/" Dockerfile
-sed -i -r -e "s/v[0-9]+\.[0-9]+\.[0-9]+/v${next_version}/" README.md
-
 # Prepare new changelog
 git cliff --bump --output CHANGELOG.md
-git add -A
+git add CHANGELOG.md
 git commit -m "chore(release): prepare for ${next_version}"
