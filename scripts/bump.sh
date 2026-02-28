@@ -16,6 +16,6 @@ sed -i -r -e "s/SYNCTHING_VERSION=\".*\"/SYNCTHING_VERSION=\"${next_version}\"/"
 sed -i -r -e "s/v[0-9]+\.[0-9]+\.[0-9]+/v${next_version}/" README.md
 
 # Prepare new changelog
-git cliff --bump "${next_version}" --output CHANGELOG.md
+git cliff --bump --output CHANGELOG.md
 git add -A
 git commit -m "chore(release): prepare for ${next_version}"
