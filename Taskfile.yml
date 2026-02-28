@@ -8,6 +8,11 @@ vars:
 
 tasks:
   bump:
+    desc: "Bump project's version"
+    cmds:
+      - scripts/bump.sh
+
+  bump:syncthing:
     desc: "Bump syncthing version"
     cmds:
       - scripts/bump-syncthing.sh {{.SYNCTHING_VERSION}}
