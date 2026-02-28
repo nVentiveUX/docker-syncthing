@@ -8,9 +8,9 @@ vars:
 
 tasks:
   bump:
-    desc: "Bump versions and update the changelog"
+    desc: "Bump syncthing version"
     cmds:
-      - scripts/bump.sh {{.SYNCTHING_VERSION}}
+      - scripts/bump-syncthing.sh {{.SYNCTHING_VERSION}}
 
   build:
     desc: "Build the docker image"
