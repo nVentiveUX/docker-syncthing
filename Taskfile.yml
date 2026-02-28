@@ -17,11 +17,6 @@ tasks:
     cmds:
       - scripts/bump-syncthing.sh {{.SYNCTHING_VERSION}}
 
-  build:
-    desc: "Build the docker image"
-    cmds:
-      - docker buildx bake build --set "*.tags=${DOCKER_IMAGE}:dev"
-
   preview-changelog:
     desc: "Preview next changelog"
     cmds:
@@ -36,11 +31,10 @@ tasks:
 
   tests:
     desc: "Build and run the container for testing"
-    deps: [build]
     cmds:
-      - docker run -it --rm -p 8000:8384 --name syncthing_tests {{.DOCKER_IMAGE}}:dev
+      - docker run -it --rm -p 8000:8384 --name syncthing_tests {{.DOCKER_IMAGE}}:latest
 
   clean:
     desc: "Remove the local docker image"
     cmds:
-      - docker image rm {{.DOCKER_IMAGE}}:dev
+      - docker image rm {{.DOCKER_IMAGE}}:latest

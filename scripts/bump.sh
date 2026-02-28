@@ -11,6 +11,9 @@ then
   exit 1
 fi
 
+# Bump files
+sed -i -r -e "s/(Image version:.+)\`v[0-9]+\.[0-9]+\.[0-9]+\`/\1\`v${next_version}\`/" README.md
+
 # Prepare new changelog
 git cliff --bump --output CHANGELOG.md
 git add CHANGELOG.md

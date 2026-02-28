@@ -13,7 +13,7 @@ fi
 
 # Bump all versions
 sed -i -r -e "s/SYNCTHING_VERSION=\".*\"/SYNCTHING_VERSION=\"${next_version}\"/" Dockerfile
-sed -i -r -e "s/v[0-9]+\.[0-9]+\.[0-9]+/v${next_version}/" README.md
+sed -i -r -e "s/(Syncthing version:.+)\`v[0-9]+\.[0-9]+\.[0-9]+\`/\1\`v${next_version}\`/" README.md
 
 # Prepare commit
 git add Dockerfile README.md
