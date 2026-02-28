@@ -2,7 +2,7 @@
 
 set -eu
 
-next_version="${1:?Usage: $0 <next_version>}"
+next_version="$(git cliff --bumped-version)"
 
 # Checks
 if [[ -n $(git status --porcelain) ]]

@@ -111,14 +111,20 @@ Commit changes and submit a **Pull Request**.
 
 Update `SYNCTHING_VERSION` in `Taskfile.yml`.
 
-Bump the version using:
+Bump syncthing version using:
 
 ```sh
 git switch -c release/next
-task bump
+task bump:syncthing
 # Open a pull request
 # Tests...
-# Merge
+```
+
+Bump project's version:
+
+```sh
+task bump
+# Merge pull request
 # Delete release/next
 ```
 
