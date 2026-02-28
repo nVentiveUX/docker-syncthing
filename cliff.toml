@@ -76,6 +76,7 @@ commit_parsers = [
     { message = "^style", group = "<!-- 6 -->🎨 Styling" },
     { message = "^test", group = "<!-- 7 -->🧪 Testing" },
     { message = "^chore", skip = true },
+    { message = "^bump", skip = true },
     { body = ".*security", group = "<!-- 8 -->🛡️ Security" },
     { message = "^revert", group = "<!-- 9 -->◀️ Revert" },
     { message = "^Merge pull request", skip = true },
