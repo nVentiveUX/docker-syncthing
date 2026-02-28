@@ -20,7 +20,7 @@ tasks:
   preview-changelog:
     desc: "Preview next changelog"
     cmds:
-      - git cliff --bump {{.SYNCTHING_VERSION}} --unreleased
+      - git cliff --bump --unreleased
 
   tag:
     desc: "Create a new tag for this release"

@@ -11,4 +11,4 @@ then
   exit 1
 fi
 
-git cliff --bump "${next_version}" --unreleased --strip header | git tag --cleanup=verbatim -a "${next_version}" -F -
+git cliff --bump --unreleased --strip header | git tag --cleanup=verbatim -a "${next_version}" -F -

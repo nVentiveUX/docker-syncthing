@@ -21,7 +21,7 @@ body = """
     {% for group, commits in commits | group_by(attribute="scope") %}\
         {% for commit in commits %}
             * **{{ group }}**: {{ commit.message | upper_first }}\
-            {% if commit.body %}
+            {% if commit.body %}\n
             {{ commit.body | indent(prefix="  ", first=true) }}\
             {% endif %}\
         {% endfor %}\
@@ -67,13 +67,14 @@ protect_breaking_commits = false
 # Assigns commits to groups.
 # Optionally sets the commit's scope and can decide to exclude commits from further processing.
 commit_parsers = [
-    { message = "^feat", group = "<!-- 0 -->🚀 Features" },
-    { message = "^fix", group = "<!-- 1 -->🐛 Bug Fixes" },
+    { message = "\\(syncthing\\)", group = "<!-- 0 -->⬆️ Upstream" },
+    { message = "^feat", group = "<!-- 1 -->🚀 Features" },
+    { message = "^fix", group = "<!-- 2 -->🐛 Bug Fixes" },
     { message = "^doc", group = "<!-- 3 -->📚 Documentation" },
     { message = "^perf", group = "<!-- 4 -->⚡ Performance" },
-    { message = "^refactor", group = "<!-- 2 -->🚜 Refactor" },
-    { message = "^style", group = "<!-- 5 -->🎨 Styling" },
-    { message = "^test", group = "<!-- 6 -->🧪 Testing" },
+    { message = "^refactor", group = "<!-- 5 -->🚜 Refactor" },
+    { message = "^style", group = "<!-- 6 -->🎨 Styling" },
+    { message = "^test", group = "<!-- 7 -->🧪 Testing" },
     { message = "^chore", skip = true },
     { body = ".*security", group = "<!-- 8 -->🛡️ Security" },
     { message = "^revert", group = "<!-- 9 -->◀️ Revert" },
