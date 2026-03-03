@@ -4,6 +4,22 @@
 
 All notable changes to this project will be documented in this file.
 
+## 3.1.0 - 2026-03-03
+
+### <!-- 0 -->⬆️ Upstream
+
+* **syncthing**: Bump to 2.0.15
+
+  * [Release notes](https://github.com/syncthing/syncthing/releases/tag/v2.0.15)
+
+### <!-- 1 -->🚀 Features
+
+* **scripts**: Fetch latest release from github api for syncthing
+
+### <!-- 2 -->🐛 Bug Fixes
+
+* **readme**: Incorrect image tags in README after a bump
+
 ## 3.0.0 - 2026-02-28
 
 ### <!-- 0 -->⬆️ Upstream
