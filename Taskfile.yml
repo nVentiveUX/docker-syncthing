@@ -4,7 +4,6 @@ silent: true
 
 vars:
   DOCKER_IMAGE: "nventiveux/syncthing"
-  SYNCTHING_VERSION: "2.0.14"
 
 tasks:
   bump:
@@ -15,7 +14,7 @@ tasks:
   bump:syncthing:
     desc: "Bump syncthing version"
     cmds:
-      - scripts/bump-syncthing.sh {{.SYNCTHING_VERSION}}
+      - scripts/bump-syncthing.sh
 
   preview-changelog:
     desc: "Preview next changelog"
@@ -26,7 +25,7 @@ tasks:
     desc: "Create a new tag for this release"
     prompt: "You are about to create a new release. Continue ?"
     cmds:
-      - scripts/tag.sh {{.SYNCTHING_VERSION}}
+      - scripts/tag.sh
       - echo "Now, push commit with tags (git push origin --tags) to create the release."
 
   tests:
