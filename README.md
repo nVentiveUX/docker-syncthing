@@ -21,7 +21,7 @@ Following arch are missing tests:
 
 * [nventiveux/syncthing](https://hub.docker.com/r/nventiveux/syncthing)
   * Image version: `latest`, `v3.0.0` ([Dockerfile](./Dockerfile))
-  * Syncthing version: `v2.0.14`
+  * Syncthing version: `v2.0.15`
 
 ## Usage
 
@@ -109,8 +109,6 @@ Tweak `Dockerfile` to your convenience.
 Commit changes and submit a **Pull Request**.
 
 ### Releasing a new version
-
-Update `SYNCTHING_VERSION` in `Taskfile.yml`.
 
 Bump syncthing version using:
 
