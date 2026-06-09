@@ -21,7 +21,7 @@ Following arch are missing tests:
 
 * [nventiveux/syncthing](https://hub.docker.com/r/nventiveux/syncthing)
   * Image version: `latest`, `3.1.0` ([Dockerfile](./Dockerfile))
-  * Syncthing version: `v2.0.15`
+  * Syncthing version: `v2.1.1`
 
 ## Usage
 
