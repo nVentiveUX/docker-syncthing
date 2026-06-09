@@ -4,6 +4,22 @@
 
 All notable changes to this project will be documented in this file.
 
+## 3.2.0 - 2026-06-09
+
+### <!-- 0 -->⬆️ Upstream
+
+* **syncthing**: Bump to 2.1.1
+
+  * [Release notes](https://github.com/syncthing/syncthing/releases/tag/v2.1.1)
+
+### <!-- 1 -->🚀 Features
+
+* **config**: Bump config version schema to 52
+
+### <!-- 2 -->🐛 Bug Fixes
+
+* **tests**: Allow to select image tag in `tests` task
+
 ## 3.1.0 - 2026-03-03
 
 ### <!-- 0 -->⬆️ Upstream
