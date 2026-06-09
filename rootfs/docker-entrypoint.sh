@@ -24,7 +24,7 @@ get_ownerships() {
     fi
 }
 
-printf "* Generated salted password: %s\\n" "${SYNCTHING_ADMIN_PASSWORD_HASH}"
+printf "* Generated salted password: %s\\n" "${SYNCTHING_ADMIN_PASSWORD_HASH:0:8}..."
 
 if ! getent passwd "${SYNCTHING_USER}" &>/dev/null
 then
