@@ -4,6 +4,18 @@
 
 All notable changes to this project will be documented in this file.
 
+## 3.3.0 - 2026-08-26
+
+### <!-- 0 -->⬆️ Upstream
+
+* **syncthing**: Bump to 2.1.3
+
+  * [Release notes](https://github.com/syncthing/syncthing/releases/tag/v2.1.3)
+
+### <!-- 1 -->🚀 Features
+
+* **tools**: Add /release-syncthing slash command
+
 ## 3.2.0 - 2026-06-09
 
 ### <!-- 0 -->⬆️ Upstream
