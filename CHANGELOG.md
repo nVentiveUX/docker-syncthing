@@ -4,6 +4,14 @@
 
 All notable changes to this project will be documented in this file.
 
+## 3.4.0 - 2026-10-11
+
+### <!-- 0 -->⬆️ Upstream
+
+* **syncthing**: Bump to 2.1.6
+
+  * [Release notes](https://github.com/syncthing/syncthing/releases/tag/v2.1.6)
+
 ## 3.3.0 - 2026-08-26
 
 ### <!-- 0 -->⬆️ Upstream
