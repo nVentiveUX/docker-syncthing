@@ -23,6 +23,9 @@ Then:
 1. `git switch -c release/next`
 2. `task bump:syncthing`
 3. Verify the resulting diff touches only Dockerfile and README.md as expected
-4. Push the branch
-5. Run `task preview-changelog`, take the generated `## <next version>...` block as the PR body,
-   and open the PR with `gh pr create` (title: `feat(syncthing): bump to <version>`)
+4. Run `task bump` to update the version in the repo.
+5. Run `task preview-changelog`, take the generated `## <next version>...` block as the PR body.
+6. Push the branch and open the PR with `gh pr create` (title: `feat(syncthing): bump to <version>`).
+7. Wait for CI to produce a new image that can be tested with `task tests` and `pr-<ID>` for the image tag.
+8. Ask for manual approval and merge of the PR.
+9. Switch to main, pull and tag with `task tag`, then push the tag to GitHub.
